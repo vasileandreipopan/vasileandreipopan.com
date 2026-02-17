@@ -1,0 +1,209 @@
+---
+const navItems = [
+  { label: "~/inicio",      href: "/",              id: "inicio"    },
+  { label: "~/proyectos",   href: "/#proyectos",    id: "proyectos" },
+  { label: "~/writeups",    href: "/#writeups",     id: "writeups"  },
+  { label: "~/about",       href: "/#about",        id: "about"     },
+  { label: "~/contacto",    href: "/#contacto",     id: "contacto"  },
+];
+---
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-block">
+      <span class="logo-bracket">[</span>
+      <span class="logo-name">vap</span>
+      <span class="logo-bracket">]</span>
+    </div>
+    <div class="logo-tagline">DevOps → DevSecOps</div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <nav class="sidebar-nav">
+    {navItems.map((item, i) => {
+      const isActive = i === 0;
+      return (
+        <a
+          href={item.href}
+          class={`nav-item ${isActive ? "active" : ""}`}
+          data-section={item.id}
+        >
+          <span class="nav-icon">{isActive ? "▶" : "›"}</span>
+          <span class="nav-label">{item.label}</span>
+          <span class="nav-active-bar" style={isActive ? "" : "display:none"} />
+        </a>
+      );
+    })}
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-divider"></div>
+    <div class="footer-status">
+      <span class="status-dot"></span>
+      <span class="status-text">online</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/" target="_blank" rel="noopener" class="footer-link">gh</a>
+      <span class="footer-sep">/</span>
+      <a href="https://linkedin.com/" target="_blank" rel="noopener" class="footer-link">li</a>
+      <span class="footer-sep">/</span>
+      <a href="mailto:hello@example.com" class="footer-link">mail</a>
+    </div>
+    <div class="footer-version">v2025.02</div>
+  </div>
+</aside>
+
+<style>
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0 24px;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    padding: 0 24px 20px;
+  }
+
+  .logo-block {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .logo-bracket { color: var(--border-hi); }
+  .logo-name    { color: var(--text); }
+
+  .logo-tagline {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 7px;
+    letter-spacing: 0.4px;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 24px 16px;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 4px 0;
+  }
+
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    letter-spacing: 0.2px;
+  }
+
+  .nav-item:hover {
+    color: var(--text);
+    background: var(--accent-subtle);
+    text-decoration: none;
+  }
+
+  .nav-item.active {
+    color: var(--accent);
+    background: var(--accent-subtle);
+  }
+
+  .nav-active-bar {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 55%;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .nav-icon {
+    font-size: 10px;
+    width: 12px;
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+
+  .nav-item.active .nav-icon,
+  .nav-item:hover .nav-icon {
+    color: var(--accent);
+  }
+
+  .nav-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-footer { padding-top: 4px; }
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 24px 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+  }
+
+  .status-text { color: var(--accent-dim); font-size: 11px; }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 24px 6px;
+    font-size: 11px;
+  }
+
+  .footer-link {
+    color: var(--muted);
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .footer-link:hover { color: var(--accent); text-decoration: none; }
+  .footer-sep { color: var(--border-hi); }
+
+  .footer-version {
+    padding: 0 24px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+</style>

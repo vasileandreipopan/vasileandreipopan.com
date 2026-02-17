@@ -1,0 +1,257 @@
+---
+const projects = [
+  {
+    id: "k8s-remediation",
+    label: "prácticas",
+    title: "Self-Healing Kubernetes Platform",
+    desc: "Sistema de remediación automática capaz de detectar fallos en workloads (CrashLoopBackOff, OOMKilled) y ejecutar acciones correctivas sin intervención manual. Integra alertas de monitoring, audit logging y ejecución controlada vía Kubernetes API.",
+    highlight: "Redujo el tiempo de respuesta a incidentes y mejoró la resiliencia de la plataforma.",
+    tags: ["Kubernetes", "Go/Python", "K8s API", "Monitoring", "Self-healing"],
+    link: null,
+    linkLabel: null,
+    status: "WIP",
+  },
+  {
+    id: "nasa-exoplanets",
+    label: "hackathon",
+    title: "Exoplanet Detection — NASA Space Apps 2024",
+    desc: "Plataforma web con IA/ML para detectar exoplanetas a partir del dataset Kepler de la NASA. Dos modos: didáctico (visualizaciones interactivas para el público) y profesional (análisis de light curves reales con modelo entrenado).",
+    highlight: "Acerca la detección de exoplanetas tanto a investigadores como al público general.",
+    tags: ["Python", "ML", "NASA Kepler", "Web", "Data Viz"],
+    link: null,
+    linkLabel: "ver repo",
+    status: "done",
+  },
+  {
+    id: "lerobot",
+    label: "hackathon",
+    title: "LE-PICASSO — LeRobot Bilbao Hackathon",
+    desc: "Control de brazo robótico por voz desde una webapp. Un modelo de IA procesa el audio, extrae instrucciones mediante NER (Named Entity Recognition) y las envía al robot, que dibuja lo solicitado.",
+    highlight: "Combinación de NLP, robótica y web en tiempo real.",
+    tags: ["NER", "NLP", "Robotics", "LeRobot", "Webapp"],
+    link: null,
+    linkLabel: "ver repo",
+    status: "done",
+  },
+  {
+    id: "hackupc",
+    label: "hackathon",
+    title: "Travel Recommender — HackUPC 2024",
+    desc: "App web que ayuda a encontrar destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real.",
+    highlight: "Enfoque en accesibilidad de datos de viaje sostenible.",
+    tags: ["API Integration", "Frontend", "Skyscanner API"],
+    link: null,
+    linkLabel: "ver repo",
+    status: "done",
+  },
+];
+---
+
+<div class="proyectos-section">
+  <div class="section-header">
+    <div class="section-prompt">
+      <span class="sp-user">admin</span>
+      <span class="sp-sep"> : </span>
+      <span class="sp-path">~</span>
+      <span class="sp-dollar"> $ </span>
+      <span class="sp-cmd">ls -la proyectos/</span>
+    </div>
+    <h2 class="section-title">proyectos</h2>
+  </div>
+
+  <div class="projects-grid">
+    {projects.map((p) => (
+      <article class="project-card" data-status={p.status}>
+        <div class="card-top">
+          <span class="card-label">{p.label}</span>
+          {p.status === "WIP" && <span class="card-wip">en curso</span>}
+        </div>
+
+        <h3 class="card-title">{p.title}</h3>
+        <p class="card-desc">{p.desc}</p>
+
+        <div class="card-highlight">
+          <span class="highlight-arrow">→</span>
+          {p.highlight}
+        </div>
+
+        <div class="card-footer">
+          <div class="card-tags">
+            {p.tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+          {p.link && (
+            <a href={p.link} target="_blank" rel="noopener" class="card-link">
+              {p.linkLabel} ↗
+            </a>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
+
+<style>
+  .proyectos-section {
+    width: 100%;
+  }
+
+  /* ── Header ── */
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .section-prompt {
+    font-family: var(--font);
+    font-size: 12px;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+
+  .sp-user   { color: var(--accent); }
+  .sp-sep,
+  .sp-dollar { color: var(--muted); }
+  .sp-path   { color: var(--text-dim); }
+  .sp-cmd    { color: var(--text); }
+
+  .section-title {
+    font-family: var(--font);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  /* ── Grid ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  /* ── Card ── */
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-hi);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+
+  .project-card[data-status="WIP"] {
+    border-color: var(--accent-dim);
+    border-left: 3px solid var(--accent);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-family: var(--font);
+    background: var(--bg-panel);
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+
+  .card-wip {
+    font-size: 10px;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid var(--accent-dim);
+    letter-spacing: 0.5px;
+    font-family: var(--font);
+  }
+
+  .card-title {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+  }
+
+  .card-desc {
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .card-highlight {
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--accent-dim);
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    padding: 8px 10px;
+    background: var(--accent-subtle);
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+
+  .highlight-arrow {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-family: var(--font);
+    color: var(--text-dim);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .card-link {
+    font-size: 11px;
+    font-family: var(--font);
+    color: var(--accent);
+    white-space: nowrap;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+
+  .card-link:hover { opacity: 0.7; text-decoration: none; }
+</style>

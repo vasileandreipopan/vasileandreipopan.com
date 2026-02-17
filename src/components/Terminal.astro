@@ -1,0 +1,276 @@
+---
+// Terminal hero — dark island inside the warm page
+---
+
+<div class="terminal-wrap">
+  <div class="t-titlebar">
+    <div class="t-menu">
+      <span class="t-menu-item">File</span>
+      <span class="t-menu-item">Edit</span>
+      <span class="t-menu-item">View</span>
+    </div>
+    <span class="t-title">admin@vasileandreipopan.com: ~</span>
+    <div class="t-winbtns">
+      <button class="t-btn t-btn-min"   title="Minimizar" aria-label="Minimizar">−</button>
+      <button class="t-btn t-btn-max"   title="Maximizar" aria-label="Maximizar">□</button>
+      <button class="t-btn t-btn-close" title="Cerrar"    aria-label="Cerrar">×</button>
+    </div>
+  </div>
+
+  <!-- Terminal body -->
+  <div class="t-body" id="terminalBody"></div>
+</div>
+
+<style>
+  .terminal-wrap {
+    width: 100%;
+    max-width: 760px;
+    background: var(--term-bg);
+    border: 1px solid var(--term-border);
+    border-radius: 6px;
+    box-shadow:
+      0 2px 0 var(--border),
+      0 20px 60px rgba(0,0,0,0.18),
+      0 8px 24px rgba(0,0,0,0.10);
+    font-family: var(--font);
+    overflow: hidden;
+  }
+
+  /* ── Titlebar ── */
+  .t-titlebar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 0 0 12px;
+    height: 34px;
+    background: var(--term-panel);
+    border-bottom: 1px solid var(--term-border);
+    user-select: none;
+  }
+
+  /* Left: simple text menu like GNOME Terminal */
+  .t-menu {
+    display: flex;
+    gap: 0;
+  }
+
+  .t-menu-item {
+    font-size: 11px;
+    color: var(--term-dim);
+    padding: 0 10px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    transition: background 0.1s, color 0.1s;
+    letter-spacing: 0.2px;
+  }
+  .t-menu-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--term-text);
+  }
+
+  /* Center: window title */
+  .t-title {
+    font-size: 12px;
+    color: var(--term-dim);
+    letter-spacing: 0.3px;
+    text-align: center;
+  }
+
+  /* Right: window buttons */
+  .t-winbtns {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .t-btn {
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--term-border);
+    color: var(--term-dim);
+    font-size: 14px;
+    width: 44px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    font-family: var(--font);
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .t-btn:hover               { background: rgba(255,255,255,0.06); color: var(--term-text); }
+  .t-btn-close:hover         { background: #c0392b; color: #fff; }
+
+  /* ── Body ── */
+  .t-body {
+    padding: 24px 28px 28px;
+    min-height: 300px;
+    line-height: 1.85;
+    color: var(--term-text);
+  }
+
+  /* Injected elements */
+  :global(.t-block)        { margin-bottom: 6px; }
+
+  :global(.t-prompt) {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+
+  :global(.t-user)      { color: var(--term-green); font-weight: 600; }
+  :global(.t-separator) { color: var(--term-dim);   margin: 0 3px; }
+  :global(.t-path)      { color: var(--term-text);  }
+  :global(.t-dollar)    { color: var(--term-dim);   margin: 0 3px; }
+  :global(.t-cmd)       { color: var(--term-text);  font-size: 13px; }
+
+  :global(.t-output) {
+    padding-left: 4px;
+    color: var(--term-text);
+    font-size: 13px;
+  }
+
+  :global(.t-output-item) {
+    display: flex;
+    gap: 8px;
+    color: var(--term-dim);
+    font-size: 13px;
+  }
+
+  :global(.t-bullet) {
+    color: var(--term-green-dim);
+    flex-shrink: 0;
+  }
+
+  :global(.t-cursor) {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--term-green);
+    vertical-align: middle;
+    margin-left: 1px;
+    animation: blink 1s step-end infinite;
+    opacity: 0.85;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.85; }
+    50%       { opacity: 0; }
+  }
+</style>
+
+<script>
+  interface TermLine {
+    type: 'prompt-cmd' | 'output' | 'output-list' | 'spacer';
+    cmd?: string;
+    lines?: string[];
+  }
+
+  const script: TermLine[] = [
+    { type: 'prompt-cmd', cmd: 'whoami' },
+    { type: 'output', lines: ['Vasile Andrei Popan'] },
+    { type: 'spacer' },
+    { type: 'prompt-cmd', cmd: 'cat mission.txt' },
+    { type: 'output', lines: [
+      'Cloud & DevOps engineer',
+      'Oriented to security',
+    ]},
+    { type: 'spacer' },
+    { type: 'prompt-cmd', cmd: 'cat aboutMe_random.txt' },
+    { type: 'output-list', lines: [
+      'Internship at MasOrange',
+      'One of the founders of 0xdecode',
+      'Class representative at University of Deusto',
+    ]},
+    { type: 'spacer' },
+    { type: 'prompt-cmd', cmd: 'cat focused.txt' },
+    { type: 'output-list', lines: [
+      'Kubernetes',
+      'CTFs',
+      'AI agents',
+    ]},
+  ];
+
+  const body = document.getElementById('terminalBody')!;
+  const CHAR_DELAY = 26;
+  const LINE_DELAY = 80;
+  const BLOCK_DELAY = 200;
+
+  const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+  async function typeLine(el: HTMLElement, text: string) {
+    for (const ch of text) {
+      el.textContent += ch;
+      await sleep(CHAR_DELAY);
+    }
+  }
+
+  async function renderScript() {
+    for (const step of script) {
+      if (step.type === 'spacer') {
+        const sp = document.createElement('div');
+        sp.style.height = '4px';
+        body.appendChild(sp);
+        await sleep(80);
+        continue;
+      }
+
+      if (step.type === 'prompt-cmd') {
+        const block = document.createElement('div');
+        block.className = 't-block';
+        block.innerHTML = `
+          <div class="t-prompt">
+            <span class="t-user">admin</span>
+            <span class="t-separator"> : </span>
+            <span class="t-path">~</span>
+            <span class="t-dollar"> $ </span>
+            <span class="t-cmd t-typing"></span>
+          </div>`;
+        body.appendChild(block);
+        const cmdEl = block.querySelector<HTMLElement>('.t-typing')!;
+        await sleep(LINE_DELAY);
+        await typeLine(cmdEl, step.cmd!);
+        await sleep(LINE_DELAY);
+      }
+
+      if (step.type === 'output') {
+        for (const line of step.lines!) {
+          const out = document.createElement('div');
+          out.className = 't-output';
+          out.textContent = line;
+          body.appendChild(out);
+          await sleep(70);
+        }
+        await sleep(BLOCK_DELAY);
+      }
+
+      if (step.type === 'output-list') {
+        for (const line of step.lines!) {
+          const out = document.createElement('div');
+          out.className = 't-output-item';
+          out.innerHTML = `<span class="t-bullet">-</span><span>${line}</span>`;
+          body.appendChild(out);
+          await sleep(70);
+        }
+        await sleep(BLOCK_DELAY);
+      }
+    }
+
+    // Final prompt with cursor
+    const cursor = document.createElement('div');
+    cursor.className = 't-prompt';
+    cursor.style.marginTop = '6px';
+    cursor.innerHTML = `
+      <span class="t-user">admin</span>
+      <span class="t-separator"> : </span>
+      <span class="t-path">~</span>
+      <span class="t-dollar"> $ </span>
+      <span class="t-cursor"></span>`;
+    body.appendChild(cursor);
+  }
+
+  renderScript();
+</script>

@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Terminal from '../components/Terminal.astro';
+import Proyectos from '../components/Proyectos.astro';
+---
+
+<BaseLayout title="Vasile Andrei Popan — DevOps / DevSecOps">
+  <Sidebar />
+
+  <main class="main-content">
+    <!-- SECCIÓN 1: Inicio -->
+    <section class="page-section" id="inicio" data-section="inicio">
+      <div class="section-inner hero-inner">
+        <div class="hero-meta">
+          <span class="hero-tag">$ ssh admin@vapopan.dev</span>
+          <span class="hero-tag">EST. 2025</span>
+        </div>
+        <Terminal />
+        <p class="hero-hint">
+          <span class="hint-arrow">↓</span>
+          scroll para explorar
+        </p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: Proyectos -->
+    <section class="page-section" id="proyectos" data-section="proyectos">
+      <div class="section-inner">
+        <Proyectos />
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: Writeups (placeholder) -->
+    <section class="page-section" id="writeups" data-section="writeups">
+      <div class="section-inner">
+        <div class="coming-soon">
+          <span class="cs-prompt">admin@vapopan:~$ cat writeups/index.md</span>
+          <span class="cs-output">// próximamente — CTFs, labs, 0xD3C0D3</span>
+          <span class="t-cursor-inline"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: Contacto (placeholder) -->
+    <section class="page-section" id="contacto" data-section="contacto">
+      <div class="section-inner">
+        <div class="coming-soon">
+          <span class="cs-prompt">admin@vapopan:~$ cat contacto.txt</span>
+          <span class="cs-output">// próximamente</span>
+          <span class="t-cursor-inline"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .main-content {
+    margin-left: var(--sidebar-w);
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    /* dot grid */
+    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Each section = exactly one viewport */
+  .page-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Vignette per section */
+  .page-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 75% 75% at 50% 50%,
+      transparent 30%,
+      var(--bg) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    padding: 0 48px;
+  }
+
+  /* ── Hero ── */
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px;
+  }
+
+  .hero-meta {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.8px;
+    font-family: var(--font);
+  }
+
+  .hero-hint {
+    font-size: 11px;
+    color: var(--muted);
+    animation: fadeIn 1.5s ease 5s both;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font);
+  }
+
+  .hint-arrow {
+    color: var(--accent-dim);
+    animation: bounce 1.8s ease-in-out 5s infinite;
+  }
+
+  /* ── Coming soon placeholder ── */
+  .coming-soon {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: var(--font);
+  }
+
+  .cs-prompt {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .cs-output {
+    font-size: 13px;
+    color: var(--muted);
+    padding-left: 4px;
+  }
+
+  .t-cursor-inline {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 0; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(4px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+
+<script>
+  // Update sidebar active link based on visible section
+  const sections = document.querySelectorAll<HTMLElement>('.page-section');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-item');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('data-section');
+          navLinks.forEach((link) => {
+            const href = link.getAttribute('href');
+            link.classList.toggle('active', href === `/#${id}` || href === `/${id === 'inicio' ? '' : id}`);
+            const bar = link.querySelector('.nav-active-bar');
+            if (bar) (bar as HTMLElement).style.display = link.classList.contains('active') ? 'block' : 'none';
+          });
+          // update hash without jumping
+          history.replaceState(null, '', id === 'inicio' ? '/' : `#${id}`);
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
+
+  sections.forEach((s) => observer.observe(s));
+
+  // Sidebar nav click -> smooth scroll to section
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href') ?? '';
+      const sectionId = href.replace('/#', '').replace('/', '') || 'inicio';
+      const target = document.getElementById(sectionId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
