@@ -1,237 +1,483 @@
 ---
-const projects = [
+interface MediaItem {
+  type: 'img' | 'video';
+  src: string;
+  alt?: string;
+}
+
+interface Project {
+  id: string;
+  label: string;
+  status: string;
+  title: string;
+  org: string;
+  desc: string;
+  highlight: string;
+  tags: string[];
+  links: { label: string; href: string }[];
+  media: MediaItem[];
+}
+
+const projects: Project[] = [
   {
     id: "k8s-remediation",
     label: "prácticas",
+    status: "WIP",
     title: "Self-Healing Kubernetes Platform",
+    org: "Internship project",
     desc: "Sistema de remediación automática capaz de detectar fallos en workloads (CrashLoopBackOff, OOMKilled) y ejecutar acciones correctivas sin intervención manual. Integra alertas de monitoring, audit logging y ejecución controlada vía Kubernetes API.",
     highlight: "Redujo el tiempo de respuesta a incidentes y mejoró la resiliencia de la plataforma.",
-    tags: ["Kubernetes", "Go/Python", "K8s API", "Monitoring", "Self-healing"],
-    link: null,
-    linkLabel: null,
-    status: "WIP",
+    tags: ["Kubernetes", "K8s API", "Monitoring", "Self-healing", "Python"],
+    links: [],
+    media: [
+      // { type: "img", src: "/media/k8s-1.png", alt: "Arquitectura del sistema" },
+      // { type: "img", src: "/media/k8s-2.png", alt: "Dashboard de monitoring" },
+      // { type: "video", src: "/media/k8s-demo.mp4" },
+    ],
   },
   {
     id: "nasa-exoplanets",
     label: "hackathon",
-    title: "Exoplanet Detection — NASA Space Apps 2024",
-    desc: "Plataforma web con IA/ML para detectar exoplanetas a partir del dataset Kepler de la NASA. Dos modos: didáctico (visualizaciones interactivas para el público) y profesional (análisis de light curves reales con modelo entrenado).",
-    highlight: "Acerca la detección de exoplanetas tanto a investigadores como al público general.",
-    tags: ["Python", "ML", "NASA Kepler", "Web", "Data Viz"],
-    link: null,
-    linkLabel: "ver repo",
     status: "done",
+    title: "Exoplanet Detection",
+    org: "NASA Space Apps Challenge 2024",
+    desc: "Plataforma web con IA/ML para detectar exoplanetas a partir del dataset Kepler de la NASA. Modo didáctico con visualizaciones interactivas para el público, y modo profesional para que investigadores suban y analicen light curves reales con nuestro modelo entrenado.",
+    highlight: "Acerca la detección de exoplanetas tanto a investigadores como al público general.",
+    tags: ["Python", "ML", "NASA Kepler", "Data Viz", "Web"],
+    links: [{ label: "repo ↗", href: "#" }],
+    media: [
+      // { type: "img", src: "/media/nasa-1.png", alt: "Demo modo didáctico" },
+      // { type: "img", src: "/media/nasa-2.png", alt: "Análisis light curve" },
+    ],
   },
   {
     id: "lerobot",
     label: "hackathon",
-    title: "LE-PICASSO — LeRobot Bilbao Hackathon",
-    desc: "Control de brazo robótico por voz desde una webapp. Un modelo de IA procesa el audio, extrae instrucciones mediante NER (Named Entity Recognition) y las envía al robot, que dibuja lo solicitado.",
-    highlight: "Combinación de NLP, robótica y web en tiempo real.",
-    tags: ["NER", "NLP", "Robotics", "LeRobot", "Webapp"],
-    link: null,
-    linkLabel: "ver repo",
     status: "done",
+    title: "LE-PICASSO",
+    org: "LeRobot Bilbao Hackathon",
+    desc: "Control de brazo robótico por voz desde una webapp. Un modelo de IA procesa el audio, extrae instrucciones mediante NER (Named Entity Recognition) y las envía al robot, que dibuja lo solicitado en tiempo real.",
+    highlight: "Combinación de NLP en tiempo real, robótica y web en un pipeline end-to-end.",
+    tags: ["NER", "NLP", "LeRobot", "Robotics", "Webapp"],
+    links: [{ label: "repo ↗", href: "#" }],
+    media: [
+      // { type: "img", src: "/media/lerobot-1.jpg", alt: "El brazo dibujando" },
+      // { type: "video", src: "/media/lerobot-demo.mp4" },
+    ],
   },
   {
     id: "hackupc",
     label: "hackathon",
-    title: "Travel Recommender — HackUPC 2024",
-    desc: "App web que ayuda a encontrar destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real.",
+    status: "done",
+    title: "Travel Recommender",
+    org: "HackUPC 2024 — Skyscanner Challenge",
+    desc: "App web que ayuda a encontrar destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real. Enfocado en hacer accesible el viaje sostenible.",
     highlight: "Enfoque en accesibilidad de datos de viaje sostenible.",
     tags: ["API Integration", "Frontend", "Skyscanner API"],
-    link: null,
-    linkLabel: "ver repo",
-    status: "done",
+    links: [{ label: "repo ↗", href: "#" }],
+    media: [
+      // { type: "img", src: "/media/hackupc-1.png", alt: "UI de la app" },
+    ],
   },
 ];
 ---
 
-<div class="proyectos-section">
-  <div class="section-header">
-    <div class="section-prompt">
-      <span class="sp-user">admin</span>
-      <span class="sp-sep"> : </span>
-      <span class="sp-path">~</span>
-      <span class="sp-dollar"> $ </span>
-      <span class="sp-cmd">ls -la proyectos/</span>
+<div class="proyectos-viewer" id="proyectosViewer">
+
+  <!-- Main viewer -->
+  <div class="viewer-stage">
+
+    <!-- Prev arrow -->
+    <button class="nav-arrow nav-prev" id="navPrev" aria-label="Proyecto anterior">
+      <span>←</span>
+    </button>
+
+    <!-- Project slides -->
+    <div class="slides-container" id="slidesContainer">
+      {projects.map((p, i) => (
+        <div class={`project-slide ${i === 0 ? 'active' : ''}`} data-index={i}>
+
+          <!-- ── MEDIA CAROUSEL (35%) ── -->
+          <div class="media-area">
+            <!-- Overlay header -->
+            <div class="media-header">
+              <div class="section-prompt">
+                <span class="sp-user">admin</span><span class="sp-sep"> : </span><span class="sp-path">~</span><span class="sp-dollar"> $ </span><span class="sp-cmd">ls proyectos/</span>
+              </div>
+              <div class="viewer-counter">
+                <span class="counter-current" id={i === 0 ? "counterCurrent" : undefined}>01</span>
+                <span class="counter-sep">/</span>
+                <span class="counter-total">{String(projects.length).padStart(2,'0')}</span>
+              </div>
+            </div>
+            {p.media.length > 0 ? (
+              <div class="media-carousel" data-project={p.id}>
+                <div class="media-track">
+                  {p.media.map((m) => (
+                    <div class="media-item">
+                      {m.type === 'img' && <img src={m.src} alt={m.alt ?? p.title} loading="lazy" />}
+                      {m.type === 'video' && <video src={m.src} controls muted playsinline />}
+                    </div>
+                  ))}
+                </div>
+                {p.media.length > 1 && (
+                  <div class="media-dots">
+                    {p.media.map((_, mi) => (
+                      <button class={`media-dot ${mi === 0 ? 'active' : ''}`} data-mi={mi} aria-label={`Imagen ${mi+1}`} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div class="media-placeholder">
+                <div class="placeholder-inner">
+                  <span class="placeholder-icon">▣</span>
+                  <span class="placeholder-text">// imágenes próximamente</span>
+                  <span class="placeholder-sub">añade archivos en /public/media/</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- ── PROJECT INFO (65%) ── -->
+          <div class="info-area">
+            <div class="info-top">
+              <div class="info-meta">
+                <span class="info-label">{p.label}</span>
+                {p.status === 'WIP' && <span class="info-wip">en curso</span>}
+                <span class="info-org">{p.org}</span>
+              </div>
+              <h2 class="info-title">{p.title}</h2>
+            </div>
+
+            <p class="info-desc">{p.desc}</p>
+
+            <div class="info-highlight">
+              <span class="highlight-arrow">→</span>
+              <span>{p.highlight}</span>
+            </div>
+
+            <div class="info-footer">
+              <div class="info-tags">
+                {p.tags.map(tag => <span class="tag">{tag}</span>)}
+              </div>
+              <div class="info-links">
+                {p.links.map(l => (
+                  <a href={l.href} target="_blank" rel="noopener" class="info-link">{l.label}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      ))}
     </div>
-    <h2 class="section-title">proyectos</h2>
+
+    <!-- Next arrow -->
+    <button class="nav-arrow nav-next" id="navNext" aria-label="Proyecto siguiente">
+      <span>→</span>
+    </button>
+
   </div>
 
-  <div class="projects-grid">
-    {projects.map((p) => (
-      <article class="project-card" data-status={p.status}>
-        <div class="card-top">
-          <span class="card-label">{p.label}</span>
-          {p.status === "WIP" && <span class="card-wip">en curso</span>}
-        </div>
-
-        <h3 class="card-title">{p.title}</h3>
-        <p class="card-desc">{p.desc}</p>
-
-        <div class="card-highlight">
-          <span class="highlight-arrow">→</span>
-          {p.highlight}
-        </div>
-
-        <div class="card-footer">
-          <div class="card-tags">
-            {p.tags.map(tag => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-          {p.link && (
-            <a href={p.link} target="_blank" rel="noopener" class="card-link">
-              {p.linkLabel} ↗
-            </a>
-          )}
-        </div>
-      </article>
+  <!-- Bottom dot nav -->
+  <div class="viewer-dots" id="viewerDots">
+    {projects.map((p, i) => (
+      <button
+        class={`vdot ${i === 0 ? 'active' : ''}`}
+        data-idx={i}
+        aria-label={p.title}
+        title={p.title}
+      />
     ))}
   </div>
+
 </div>
 
 <style>
-  .proyectos-section {
+  /* ── Viewer shell ── */
+  .proyectos-viewer {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 0;
   }
 
-  /* ── Header ── */
-  .section-header {
-    margin-bottom: 28px;
+
+  /* ── Media overlay header ── */
+  .media-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(to bottom, rgba(245,242,237,0.92) 60%, transparent);
   }
 
-  .section-prompt {
-    font-family: var(--font);
-    font-size: 12px;
-    margin-bottom: 8px;
-    opacity: 0.6;
-  }
-
+  .section-prompt { font-size: 11px; opacity: 0.55; }
   .sp-user   { color: var(--accent); }
   .sp-sep,
   .sp-dollar { color: var(--muted); }
   .sp-path   { color: var(--text-dim); }
   .sp-cmd    { color: var(--text); }
 
-  .section-title {
-    font-family: var(--font);
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-
-  /* ── Grid ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-
-  /* ── Card ── */
-  .project-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 20px 22px;
+  .viewer-counter {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    gap: 3px;
+    align-items: center;
+  }
+  .counter-current { color: var(--text); font-weight: 600; }
+  .counter-sep     { color: var(--border-hi); }
+
+  /* ── Stage: arrows + slides ── */
+  .viewer-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-height: 0;
+    overflow: hidden;
     position: relative;
   }
 
-  .project-card:hover {
-    border-color: var(--border-hi);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  /* ── Nav arrows ── */
+  .nav-arrow {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-dim);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    font-family: var(--font);
+    z-index: 10;
+    margin: 0 8px;
+  }
+  .nav-arrow:hover { color: var(--text); background: var(--bg-panel); border-color: var(--border-hi); }
+  .nav-arrow:disabled { opacity: 0.25; cursor: default; }
+  .nav-arrow:disabled:hover { background: var(--bg-card); color: var(--text-dim); border-color: var(--border); }
+
+  /* ── Slides container ── */
+  .slides-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    align-self: stretch;
   }
 
-  .project-card[data-status="WIP"] {
-    border-color: var(--accent-dim);
-    border-left: 3px solid var(--accent);
+  .project-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+    overflow: hidden;
   }
 
-  .card-top {
+  .project-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  /* ── MEDIA AREA ── */
+  .media-area {
+    height: 360px;
+    flex-shrink: 0;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Carousel */
+  .media-carousel { width: 100%; height: 100%; position: relative; }
+
+  .media-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.35s ease;
+  }
+
+  .media-item {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .media-item img,
+  .media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+  }
+
+  .media-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: background 0.2s;
+    padding: 0;
+  }
+  .media-dot.active { background: rgba(255,255,255,0.9); }
+
+  /* Placeholder */
+  .media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .placeholder-icon {
+    font-size: 28px;
+    color: var(--border-hi);
+    line-height: 1;
+  }
+
+  .placeholder-text {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--font);
+  }
+
+  .placeholder-sub {
+    font-size: 10px;
+    color: var(--border-hi);
+    font-family: var(--font);
+  }
+
+  /* ── INFO AREA ── */
+  .info-area {
+    padding: 14px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .info-meta {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 6px;
   }
 
-  .card-label {
+  .info-label {
     font-size: 10px;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1.2px;
     font-family: var(--font);
     background: var(--bg-panel);
-    padding: 2px 7px;
+    padding: 2px 8px;
     border-radius: 3px;
     border: 1px solid var(--border);
   }
 
-  .card-wip {
+  .info-wip {
     font-size: 10px;
     color: var(--accent);
     background: var(--accent-subtle);
-    padding: 2px 7px;
+    padding: 2px 8px;
     border-radius: 3px;
     border: 1px solid var(--accent-dim);
     letter-spacing: 0.5px;
     font-family: var(--font);
   }
 
-  .card-title {
+  .info-org {
+    font-size: 11px;
+    color: var(--text-dim);
     font-family: var(--font);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.4;
-    letter-spacing: -0.2px;
+    margin-left: 4px;
   }
 
-  .card-desc {
+  .info-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
     font-family: var(--font);
+  }
+
+  .info-desc {
     font-size: 12px;
     color: var(--text-dim);
-    line-height: 1.7;
-    flex: 1;
+    line-height: 1.65;
+    font-family: var(--font);
   }
 
-  .card-highlight {
-    font-family: var(--font);
+  .info-highlight {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
     font-size: 11px;
     color: var(--accent-dim);
-    display: flex;
-    gap: 6px;
-    align-items: flex-start;
-    padding: 8px 10px;
     background: var(--accent-subtle);
+    padding: 7px 12px;
     border-radius: 4px;
+    border-left: 2px solid var(--accent);
+    font-family: var(--font);
     line-height: 1.5;
-  }
-
-  .highlight-arrow {
-    color: var(--accent);
     flex-shrink: 0;
-    margin-top: 1px;
   }
 
-  .card-footer {
+  .highlight-arrow { color: var(--accent); flex-shrink: 0; }
+
+  .info-footer {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-top: 2px;
+    flex-shrink: 0;
   }
 
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
+  .info-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 
   .tag {
     font-size: 10px;
@@ -239,19 +485,142 @@ const projects = [
     color: var(--text-dim);
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    padding: 2px 7px;
+    padding: 3px 8px;
     border-radius: 3px;
-    letter-spacing: 0.3px;
   }
 
-  .card-link {
-    font-size: 11px;
+  .info-links { display: flex; gap: 10px; }
+
+  .info-link {
+    font-size: 12px;
     font-family: var(--font);
     color: var(--accent);
-    white-space: nowrap;
-    transition: opacity 0.15s;
     text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 1px;
+    transition: opacity 0.15s;
+  }
+  .info-link:hover { opacity: 0.7; text-decoration: none; }
+
+  /* ── Bottom dots ── */
+  .viewer-dots {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 0 0;
   }
 
-  .card-link:hover { opacity: 0.7; text-decoration: none; }
+  .vdot {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    border: none;
+    background: var(--border-hi);
+    cursor: pointer;
+    transition: background 0.2s, width 0.2s;
+    padding: 0;
+  }
+  .vdot.active {
+    background: var(--accent);
+    width: 42px;
+  }
 </style>
+
+<script>
+  // ── Project navigation ──
+  const slides = document.querySelectorAll<HTMLElement>('.project-slide');
+  const vdots  = document.querySelectorAll<HTMLElement>('.vdot');
+  const prevBtn = document.getElementById('navPrev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('navNext') as HTMLButtonElement;
+  const counterEl = document.getElementById('counterCurrent')!;
+  let current = 0;
+
+  function goTo(next: number) {
+    if (next < 0 || next >= slides.length) return;
+    if (next === current) return;
+
+    const dir = next > current ? 1 : -1;
+
+    // Slide out current
+    const outSlide = slides[current];
+    outSlide.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    outSlide.style.transform = `translateX(${-dir * 48}px)`;
+    outSlide.style.opacity = '0';
+    outSlide.style.pointerEvents = 'none';
+
+    current = next;
+    const inSlide = slides[current];
+
+    // Position incoming off-screen instantly
+    inSlide.style.transition = 'none';
+    inSlide.style.transform = `translateX(${dir * 48}px)`;
+    inSlide.style.opacity = '0';
+    inSlide.style.pointerEvents = 'none';
+
+    // Force reflow then animate in
+    inSlide.getBoundingClientRect();
+    inSlide.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    inSlide.style.transform = 'translateX(0)';
+    inSlide.style.opacity = '1';
+    inSlide.style.pointerEvents = 'all';
+
+    // After out animation, reset class + remove inline styles
+    setTimeout(() => {
+      outSlide.classList.remove('active');
+      outSlide.style.cssText = '';
+      inSlide.classList.add('active');
+      inSlide.style.cssText = '';
+    }, 320);
+
+    // update dots + counter
+    vdots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counterEl.textContent = String(current + 1).padStart(2, '0');
+
+    // update arrow states
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  vdots.forEach((dot, i) => {
+    dot.addEventListener('click', () => goTo(i));
+  });
+
+  // keyboard
+  document.addEventListener('keydown', (e) => {
+    const section = document.getElementById('proyectos');
+    if (!section) return;
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  // init
+  prevBtn.disabled = true;
+  nextBtn.disabled = slides.length <= 1;
+
+  // ── Media carousel per project ──
+  document.querySelectorAll<HTMLElement>('.media-carousel').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('.media-track')!;
+    const dots  = carousel.querySelectorAll<HTMLElement>('.media-dot');
+    let mCurrent = 0;
+
+    function mediGoTo(n: number) {
+      mCurrent = n;
+      track.style.transform = `translateX(-${n * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === n));
+    }
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => mediGoTo(i)));
+
+    // swipe support
+    let startX = 0;
+    carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) mediGoTo(Math.max(0, Math.min(dots.length - 1, mCurrent + (diff > 0 ? 1 : -1))));
+    });
+  });
+</script>
