@@ -20,34 +20,33 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "k8s-remediation",
-    label: "prácticas",
-    status: "WIP",
-    title: "Self-Healing Kubernetes Platform",
-    org: "Internship project",
-    desc: "Sistema de remediación automática capaz de detectar fallos en workloads (CrashLoopBackOff, OOMKilled) y ejecutar acciones correctivas sin intervención manual. Integra alertas de monitoring, audit logging y ejecución controlada vía Kubernetes API.",
-    highlight: "Redujo el tiempo de respuesta a incidentes y mejoró la resiliencia de la plataforma.",
-    tags: ["Kubernetes", "K8s API", "Monitoring", "Self-healing", "Python"],
-    links: [],
+    id: "hackupc",
+    label: "hackathon",
+    status: "",
+    title: "?",
+    org: "HackUPC 2026 · ? Challenge",
+    desc: "Coming soon...",
+    highlight: "",
+    tags: ["?", "?", "?"],
+    links: [{ label: "repo ↗", href: "#" }],
     media: [
-      // { type: "img", src: "/media/k8s-1.png", alt: "Arquitectura del sistema" },
-      // { type: "img", src: "/media/k8s-2.png", alt: "Dashboard de monitoring" },
-      // { type: "video", src: "/media/k8s-demo.mp4" },
+      // { type: "img", src: "/media/hackupc-1.png", alt: "UI" },
     ],
   },
   {
     id: "nasa-exoplanets",
     label: "hackathon",
     status: "done",
-    title: "Exoplanet Detection",
-    org: "NASA Space Apps Challenge 2024",
-    desc: "Plataforma web con IA/ML para detectar exoplanetas a partir del dataset Kepler de la NASA. Modo didáctico con visualizaciones interactivas para el público, y modo profesional para que investigadores suban y analicen light curves reales con nuestro modelo entrenado.",
-    highlight: "Acerca la detección de exoplanetas tanto a investigadores como al público general.",
-    tags: ["Python", "ML", "NASA Kepler", "Data Viz", "Web"],
-    links: [{ label: "repo ↗", href: "#" }],
+    title: "Rookie Rockets: Exovision",
+    org: "NASA Space Apps Challenge 2025",
+    desc: "Web platform powered by an AI model to detect exoplanets using NASA’s Kepler dataset. It includes an 'Educational' mode with interactive visualizations designed for the general public to understand how exoplanet detection works and a 'Professional' mode where researchers can upload and analyze real light curves using our trained model.",
+    highlight: "During the development, as coordinator and full-stack contributor, I worked across AI, frontend, and project direction.",
+    tags: ["Python", "ML", "NASA Kepler", "Data Viz", "React"],
+    links: [{ label: "+info", href: "https://www.spaceappschallenge.org/2025/find-a-team/rookie-rockets/" }],
     media: [
-      // { type: "img", src: "/media/nasa-1.png", alt: "Demo modo didáctico" },
-      // { type: "img", src: "/media/nasa-2.png", alt: "Análisis light curve" },
+      { type: "img", src: "/media/nasaHackathon-team.jpeg", alt: "team" },
+      { type: "img", src: "/media/decodeNasaHackathon.jpeg", alt: "Decode" },
+      { type: "img", src: "/media/presentationNasa.jpeg", alt: "Presentation" },
     ],
   },
   {
@@ -56,13 +55,13 @@ const projects: Project[] = [
     status: "done",
     title: "LE-PICASSO",
     org: "LeRobot Bilbao Hackathon",
-    desc: "Control de brazo robótico por voz desde una webapp. Un modelo de IA procesa el audio, extrae instrucciones mediante NER (Named Entity Recognition) y las envía al robot, que dibuja lo solicitado en tiempo real.",
-    highlight: "Combinación de NLP en tiempo real, robótica y web en un pipeline end-to-end.",
+    desc: "The project allowed users to give voice commands through a web application. An AI model processed the audio, extracted instructions using Named Entity Recognition (NER), and sent them to a robotic arm, which then executed the commands by drawing the requested object.",
+    highlight: "Pipeline end-to-end: NLP en tiempo real + robótica + web.",
     tags: ["NER", "NLP", "LeRobot", "Robotics", "Webapp"],
-    links: [{ label: "repo ↗", href: "#" }],
+    links: [{ label: "repo ↗", href: "https://github.com/vasileandreipopan/lePicasso" }],
     media: [
-      // { type: "img", src: "/media/lerobot-1.jpg", alt: "El brazo dibujando" },
-      // { type: "video", src: "/media/lerobot-demo.mp4" },
+      { type: "img", src: "/media/lerobot.png", alt: "Presentation" },
+      { type: "img", src: "/media/lerobot2.jpg", alt: "Random photo" },
     ],
   },
   {
@@ -70,100 +69,98 @@ const projects: Project[] = [
     label: "hackathon",
     status: "done",
     title: "Travel Recommender",
-    org: "HackUPC 2024 — Skyscanner Challenge",
-    desc: "App web que ayuda a encontrar destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real. Enfocado en hacer accesible el viaje sostenible.",
-    highlight: "Enfoque en accesibilidad de datos de viaje sostenible.",
+    org: "HackUPC 2024 · Skyscanner Challenge",
+    desc: "App web que recomienda destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real.",
+    highlight: "Enfoque en viaje sostenible y accesibilidad de datos.",
     tags: ["API Integration", "Frontend", "Skyscanner API"],
     links: [{ label: "repo ↗", href: "#" }],
     media: [
-      // { type: "img", src: "/media/hackupc-1.png", alt: "UI de la app" },
+      // { type: "img", src: "/media/hackupc-1.png", alt: "UI" },
     ],
   },
 ];
 ---
 
-<div class="proyectos-viewer" id="proyectosViewer">
+<div class="pv-shell">
 
-  <!-- Main viewer -->
-  <div class="viewer-stage">
+  <!-- VIEWER -->
+  <div class="pv-stage">
 
-    <!-- Prev arrow -->
-    <button class="nav-arrow nav-prev" id="navPrev" aria-label="Proyecto anterior">
-      <span>←</span>
-    </button>
+    <!-- Prev -->
+    <button class="pv-arrow pv-prev" id="pvPrev" aria-label="Anterior" disabled>←</button>
 
-    <!-- Project slides -->
-    <div class="slides-container" id="slidesContainer">
+    <!-- Cards -->
+    <div class="pv-cards" id="pvCards">
       {projects.map((p, i) => (
-        <div class={`project-slide ${i === 0 ? 'active' : ''}`} data-index={i}>
+        <div class={`pv-card ${i === 0 ? 'active' : ''}`} data-index={i}>
 
-          <!-- ── MEDIA CAROUSEL (35%) ── -->
-          <div class="media-area">
-            <!-- Overlay header -->
-            <div class="media-header">
-              <div class="section-prompt">
-                <span class="sp-user">admin</span><span class="sp-sep"> : </span><span class="sp-path">~</span><span class="sp-dollar"> $ </span><span class="sp-cmd">ls proyectos/</span>
-              </div>
-              <div class="viewer-counter">
-                <span class="counter-current" id={i === 0 ? "counterCurrent" : undefined}>01</span>
-                <span class="counter-sep">/</span>
-                <span class="counter-total">{String(projects.length).padStart(2,'0')}</span>
-              </div>
+          <!-- LEFT: media -->
+          <div class="pv-media">
+            <!-- header overlay -->
+            <div class="pv-media-header">
+              <span class="pv-prompt">
+                <span class="pu">admin</span>
+                <span class="ps"> : ~ $ </span>
+                <span class="pc">ls proyectos/</span>
+              </span>
+              <span class="pv-counter">
+                <span class="pv-cur" id={i === 0 ? 'pvCur' : undefined}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="pv-sep">/</span>
+                <span>{String(projects.length).padStart(2, '0')}</span>
+              </span>
             </div>
+
             {p.media.length > 0 ? (
-              <div class="media-carousel" data-project={p.id}>
-                <div class="media-track">
+              <div class="pv-carousel" id={`carousel-${p.id}`}>
+                <div class="pv-track">
                   {p.media.map((m) => (
-                    <div class="media-item">
+                    <div class="pv-media-item">
                       {m.type === 'img' && <img src={m.src} alt={m.alt ?? p.title} loading="lazy" />}
-                      {m.type === 'video' && <video src={m.src} controls muted playsinline />}
+                      {m.type === 'video' && <video src={m.src} muted playsinline controls />}
                     </div>
                   ))}
                 </div>
                 {p.media.length > 1 && (
-                  <div class="media-dots">
+                  <div class="pv-dots">
                     {p.media.map((_, mi) => (
-                      <button class={`media-dot ${mi === 0 ? 'active' : ''}`} data-mi={mi} aria-label={`Imagen ${mi+1}`} />
+                      <button class={`pv-dot ${mi === 0 ? 'active' : ''}`} data-mi={mi} />
                     ))}
                   </div>
                 )}
               </div>
             ) : (
-              <div class="media-placeholder">
-                <div class="placeholder-inner">
-                  <span class="placeholder-icon">▣</span>
-                  <span class="placeholder-text">// imágenes próximamente</span>
-                  <span class="placeholder-sub">añade archivos en /public/media/</span>
-                </div>
+              <div class="pv-placeholder">
+                <span class="ph-icon">▣</span>
+                <span class="ph-text">// Images coming soon</span>
               </div>
             )}
           </div>
 
-          <!-- ── PROJECT INFO (65%) ── -->
-          <div class="info-area">
-            <div class="info-top">
-              <div class="info-meta">
-                <span class="info-label">{p.label}</span>
-                {p.status === 'WIP' && <span class="info-wip">en curso</span>}
-                <span class="info-org">{p.org}</span>
-              </div>
-              <h2 class="info-title">{p.title}</h2>
+          <!-- RIGHT: info -->
+          <div class="pv-info">
+            <div class="pv-badges">
+              <span class="pv-badge">{p.label}</span>
+              {p.status === 'WIP' && <span class="pv-badge pv-badge--wip">en curso</span>}
+              <span class="pv-org">{p.org}</span>
             </div>
 
-            <p class="info-desc">{p.desc}</p>
+            <h2 class="pv-title">{p.title}</h2>
+            <p class="pv-desc">{p.desc}</p>
 
-            <div class="info-highlight">
-              <span class="highlight-arrow">→</span>
+            <div class="pv-highlight">
+              <span class="pv-arrow-icon">→</span>
               <span>{p.highlight}</span>
             </div>
 
-            <div class="info-footer">
-              <div class="info-tags">
-                {p.tags.map(tag => <span class="tag">{tag}</span>)}
+            <div class="pv-footer">
+              <div class="pv-tags">
+                {p.tags.map(t => <span class="pv-tag">{t}</span>)}
               </div>
-              <div class="info-links">
+              <div class="pv-links">
                 {p.links.map(l => (
-                  <a href={l.href} target="_blank" rel="noopener" class="info-link">{l.label}</a>
+                  <a href={l.href} target="_blank" rel="noopener" class="pv-link">{l.label}</a>
                 ))}
               </div>
             </div>
@@ -173,454 +170,384 @@ const projects: Project[] = [
       ))}
     </div>
 
-    <!-- Next arrow -->
-    <button class="nav-arrow nav-next" id="navNext" aria-label="Proyecto siguiente">
-      <span>→</span>
-    </button>
+    <!-- Next -->
+    <button class="pv-arrow pv-next" id="pvNext" aria-label="Siguiente">→</button>
 
   </div>
 
-  <!-- Bottom dot nav -->
-  <div class="viewer-dots" id="viewerDots">
-    {projects.map((p, i) => (
-      <button
-        class={`vdot ${i === 0 ? 'active' : ''}`}
-        data-idx={i}
-        aria-label={p.title}
-        title={p.title}
-      />
+  <!-- Bottom dots -->
+  <div class="pv-bottom-dots" id="pvBottomDots">
+    {projects.map((_, i) => (
+      <button class={`pvd ${i === 0 ? 'active' : ''}`} data-i={i} />
     ))}
   </div>
 
 </div>
 
 <style>
-  /* ── Viewer shell ── */
-  .proyectos-viewer {
+  /* ── Shell ── */
+  .pv-shell {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    min-height: 0;
+    align-items: center;
+    gap: 20px;
   }
 
-
-  /* ── Media overlay header ── */
-  .media-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
+  /* ── Stage ── */
+  .pv-stage {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: linear-gradient(to bottom, rgba(245,242,237,0.92) 60%, transparent);
+    gap: 12px;
+    width: 100%;
   }
 
-  .section-prompt { font-size: 11px; opacity: 0.55; }
-  .sp-user   { color: var(--accent); }
-  .sp-sep,
-  .sp-dollar { color: var(--muted); }
-  .sp-path   { color: var(--text-dim); }
-  .sp-cmd    { color: var(--text); }
-
-  .viewer-counter {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    display: flex;
-    gap: 3px;
-    align-items: center;
-  }
-  .counter-current { color: var(--text); font-weight: 600; }
-  .counter-sep     { color: var(--border-hi); }
-
-  /* ── Stage: arrows + slides ── */
-  .viewer-stage {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    min-height: 0;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* ── Nav arrows ── */
-  .nav-arrow {
+  /* ── Arrow buttons ── */
+  .pv-arrow {
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
     color: var(--text-dim);
     font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.2s, background 0.2s, border-color 0.2s;
     font-family: var(--font);
-    z-index: 10;
-    margin: 0 8px;
+    transition: all 0.15s;
   }
-  .nav-arrow:hover { color: var(--text); background: var(--bg-panel); border-color: var(--border-hi); }
-  .nav-arrow:disabled { opacity: 0.25; cursor: default; }
-  .nav-arrow:disabled:hover { background: var(--bg-card); color: var(--text-dim); border-color: var(--border); }
+  .pv-arrow:hover:not(:disabled) {
+    border-color: var(--accent-dim);
+    color: var(--accent);
+    background: var(--accent-subtle);
+  }
+  .pv-arrow:disabled { opacity: 0.2; cursor: default; }
 
-  /* ── Slides container ── */
-  .slides-container {
+  /* ── Cards container ── */
+  .pv-cards {
     flex: 1;
     position: relative;
+    height: 460px;
     overflow: hidden;
-    align-self: stretch;
+    border-radius: 8px;
   }
 
-  .project-slide {
+  /* ── Single card ── */
+  .pv-card {
     position: absolute;
     inset: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0;
-    opacity: 0;
-    transform: translateX(40px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    pointer-events: none;
+    flex-direction: row;
+    border-radius: 8px;
     overflow: hidden;
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
   }
-
-  .project-slide.active {
+  .pv-card.active {
     opacity: 1;
     transform: translateX(0);
     pointer-events: all;
   }
 
-  /* ── MEDIA AREA ── */
-  .media-area {
-    height: 360px;
+  /* ── LEFT: media ── */
+  .pv-media {
+    width: 48%;
     flex-shrink: 0;
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
+    background: var(--term-bg);
     position: relative;
+    overflow: hidden;
   }
+
+  /* Header overlay on media */
+  .pv-media-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: linear-gradient(to bottom, rgba(25,25,23,0.95) 60%, transparent);
+    font-family: var(--font);
+    font-size: 11px;
+    pointer-events: none;
+  }
+
+  .pv-prompt { display: flex; gap: 0; }
+  .pu { color: var(--term-green); font-weight: 600; }
+  .ps { color: var(--term-dim); }
+  .pc { color: var(--term-text); }
+
+  .pv-counter { color: var(--term-dim); display: flex; gap: 3px; }
+  .pv-cur { color: var(--term-text); font-weight: 600; }
+  .pv-sep { color: var(--term-border-hi); }
 
   /* Carousel */
-  .media-carousel { width: 100%; height: 100%; position: relative; }
-
-  .media-track {
+  .pv-carousel { width: 100%; height: 100%; position: relative; }
+  .pv-track {
     display: flex;
     height: 100%;
-    transition: transform 0.35s ease;
+    transition: transform 0.15s ease;
   }
-
-  .media-item {
+  .pv-media-item {
     flex-shrink: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .media-item img,
-  .media-item video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .media-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-  }
-
-  .media-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255,255,255,0.35);
-    cursor: pointer;
-    transition: background 0.2s;
-    padding: 0;
-  }
-  .media-dot.active { background: rgba(255,255,255,0.9); }
-
-  /* Placeholder */
-  .media-placeholder {
-    width: 100%;
-    height: 100%;
+    background: var(--term-bg);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
-  .placeholder-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    text-align: center;
+  .pv-media-item img,
+  .pv-media-item video {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+    background: var(--term-bg);
   }
 
-  .placeholder-icon {
-    font-size: 28px;
-    color: var(--border-hi);
-    line-height: 1;
+  .pv-dots {
+    position: absolute;
+    bottom: 10px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 5px;
   }
-
-  .placeholder-text {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: var(--font);
+  .pv-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer; padding: 0;
+    transition: background 0.2s;
   }
+  .pv-dot.active { background: rgba(255,255,255,0.9); }
 
-  .placeholder-sub {
-    font-size: 10px;
-    color: var(--border-hi);
-    font-family: var(--font);
+  /* Placeholder */
+  .pv-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; padding-top: 40px;
   }
+  .ph-icon { font-size: 24px; color: var(--term-border-hi); }
+  .ph-text { font-size: 11px; color: var(--term-dim); font-family: var(--font); }
+  .ph-sub  { font-size: 10px; color: var(--term-border-hi); font-family: var(--font); }
 
-  /* ── INFO AREA ── */
-  .info-area {
-    padding: 14px 0 0;
+  /* ── RIGHT: info ── */
+  .pv-info {
+    flex: 1;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 24px 24px 20px;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overflow: hidden;
   }
 
-  .info-meta {
+  .pv-badges {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
-  .info-label {
+  .pv-badge {
     font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
     font-family: var(--font);
+    color: var(--muted);
     background: var(--bg-panel);
-    padding: 2px 8px;
-    border-radius: 3px;
     border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
   }
-
-  .info-wip {
-    font-size: 10px;
+  .pv-badge--wip {
     color: var(--accent);
     background: var(--accent-subtle);
-    padding: 2px 8px;
-    border-radius: 3px;
-    border: 1px solid var(--accent-dim);
-    letter-spacing: 0.5px;
-    font-family: var(--font);
+    border-color: var(--accent-dim);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
-  .info-org {
+  .pv-org {
     font-size: 11px;
     color: var(--text-dim);
     font-family: var(--font);
-    margin-left: 4px;
   }
 
-  .info-title {
-    font-size: 20px;
+  .pv-title {
+    font-size: 18px;
     font-weight: 700;
     color: var(--text);
-    letter-spacing: -0.5px;
-    line-height: 1.2;
     font-family: var(--font);
+    letter-spacing: -0.4px;
+    line-height: 1.25;
   }
 
-  .info-desc {
+  .pv-desc {
     font-size: 12px;
     color: var(--text-dim);
-    line-height: 1.65;
     font-family: var(--font);
+    line-height: 1.7;
+    flex: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
   }
 
-  .info-highlight {
+  .pv-highlight {
     display: flex;
-    gap: 8px;
+    gap: 7px;
     align-items: flex-start;
     font-size: 11px;
     color: var(--accent-dim);
     background: var(--accent-subtle);
-    padding: 7px 12px;
-    border-radius: 4px;
     border-left: 2px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
     font-family: var(--font);
     line-height: 1.5;
     flex-shrink: 0;
   }
+  .pv-arrow-icon { color: var(--accent); flex-shrink: 0; }
 
-  .highlight-arrow { color: var(--accent); flex-shrink: 0; }
-
-  .info-footer {
+  .pv-footer {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 8px;
     flex-shrink: 0;
   }
 
-  .info-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-
-  .tag {
+  .pv-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pv-tag {
     font-size: 10px;
     font-family: var(--font);
     color: var(--text-dim);
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 3px;
   }
 
-  .info-links { display: flex; gap: 10px; }
-
-  .info-link {
-    font-size: 12px;
+  .pv-links { display: flex; gap: 8px; }
+  .pv-link {
+    font-size: 11px;
     font-family: var(--font);
     color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid var(--accent-dim);
-    padding-bottom: 1px;
-    transition: opacity 0.15s;
   }
-  .info-link:hover { opacity: 0.7; text-decoration: none; }
+  .pv-link:hover { opacity: 0.7; text-decoration: none; }
 
   /* ── Bottom dots ── */
-  .viewer-dots {
-    flex-shrink: 0;
+  .pv-bottom-dots {
     display: flex;
-    justify-content: center;
     gap: 8px;
-    padding: 10px 0 0;
   }
-
-  .vdot {
-    width: 28px;
-    height: 3px;
-    border-radius: 2px;
-    border: none;
+  .pvd {
+    width: 28px; height: 3px;
+    border-radius: 2px; border: none;
     background: var(--border-hi);
-    cursor: pointer;
+    cursor: pointer; padding: 0;
     transition: background 0.2s, width 0.2s;
-    padding: 0;
   }
-  .vdot.active {
+  .pvd.active {
     background: var(--accent);
     width: 42px;
   }
 </style>
 
 <script>
-  // ── Project navigation ──
-  const slides = document.querySelectorAll<HTMLElement>('.project-slide');
-  const vdots  = document.querySelectorAll<HTMLElement>('.vdot');
-  const prevBtn = document.getElementById('navPrev') as HTMLButtonElement;
-  const nextBtn = document.getElementById('navNext') as HTMLButtonElement;
-  const counterEl = document.getElementById('counterCurrent')!;
-  let current = 0;
+  const cards    = document.querySelectorAll<HTMLElement>('.pv-card');
+  const bdots    = document.querySelectorAll<HTMLElement>('.pvd');
+  const prevBtn  = document.getElementById('pvPrev') as HTMLButtonElement;
+  const nextBtn  = document.getElementById('pvNext') as HTMLButtonElement;
+  const curEl    = document.getElementById('pvCur')!;
+  let cur = 0;
 
   function goTo(next: number) {
-    if (next < 0 || next >= slides.length) return;
-    if (next === current) return;
+    if (next < 0 || next >= cards.length || next === cur) return;
+    const dir = next > cur ? 1 : -1;
 
-    const dir = next > current ? 1 : -1;
+    // out
+    const outCard = cards[cur];
+    outCard.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+    outCard.style.opacity = '0';
+    outCard.style.transform = `translateX(${-dir * 36}px)`;
+    outCard.style.pointerEvents = 'none';
 
-    // Slide out current
-    const outSlide = slides[current];
-    outSlide.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-    outSlide.style.transform = `translateX(${-dir * 48}px)`;
-    outSlide.style.opacity = '0';
-    outSlide.style.pointerEvents = 'none';
+    cur = next;
+    const inCard = cards[cur];
 
-    current = next;
-    const inSlide = slides[current];
+    // position in off-screen
+    inCard.style.transition = 'none';
+    inCard.style.opacity = '0';
+    inCard.style.transform = `translateX(${dir * 36}px)`;
+    inCard.style.pointerEvents = 'none';
 
-    // Position incoming off-screen instantly
-    inSlide.style.transition = 'none';
-    inSlide.style.transform = `translateX(${dir * 48}px)`;
-    inSlide.style.opacity = '0';
-    inSlide.style.pointerEvents = 'none';
+    inCard.getBoundingClientRect(); // reflow
 
-    // Force reflow then animate in
-    inSlide.getBoundingClientRect();
-    inSlide.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-    inSlide.style.transform = 'translateX(0)';
-    inSlide.style.opacity = '1';
-    inSlide.style.pointerEvents = 'all';
+    inCard.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+    inCard.style.opacity = '1';
+    inCard.style.transform = 'translateX(0)';
+    inCard.style.pointerEvents = 'all';
 
-    // After out animation, reset class + remove inline styles
     setTimeout(() => {
-      outSlide.classList.remove('active');
-      outSlide.style.cssText = '';
-      inSlide.classList.add('active');
-      inSlide.style.cssText = '';
-    }, 320);
+      outCard.classList.remove('active');
+      outCard.style.cssText = '';
+      inCard.classList.add('active');
+      inCard.style.cssText = '';
+    }, 300);
 
-    // update dots + counter
-    vdots.forEach((d, i) => d.classList.toggle('active', i === current));
-    counterEl.textContent = String(current + 1).padStart(2, '0');
-
-    // update arrow states
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === slides.length - 1;
+    // update UI
+    bdots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    curEl.textContent = String(cur + 1).padStart(2, '0');
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === cards.length - 1;
   }
 
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
+  prevBtn.addEventListener('click', () => goTo(cur - 1));
+  nextBtn.addEventListener('click', () => goTo(cur + 1));
+  bdots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
 
-  vdots.forEach((dot, i) => {
-    dot.addEventListener('click', () => goTo(i));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  goTo(cur - 1);
+    if (e.key === 'ArrowRight') goTo(cur + 1);
   });
 
-  // keyboard
-  document.addEventListener('keydown', (e) => {
-    const section = document.getElementById('proyectos');
-    if (!section) return;
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-    if (e.key === 'ArrowRight') goTo(current + 1);
-  });
-
-  // init
   prevBtn.disabled = true;
-  nextBtn.disabled = slides.length <= 1;
+  nextBtn.disabled = cards.length <= 1;
 
-  // ── Media carousel per project ──
-  document.querySelectorAll<HTMLElement>('.media-carousel').forEach((carousel) => {
-    const track = carousel.querySelector<HTMLElement>('.media-track')!;
-    const dots  = carousel.querySelectorAll<HTMLElement>('.media-dot');
-    let mCurrent = 0;
+  // ── Carousel autoplay per card ──
+  document.querySelectorAll<HTMLElement>('.pv-carousel').forEach(carousel => {
+    const track = carousel.querySelector<HTMLElement>('.pv-track')!;
+    const dots  = carousel.querySelectorAll<HTMLElement>('.pv-dot');
+    let mc = 0;
 
-    function mediGoTo(n: number) {
-      mCurrent = n;
+    function mGoTo(n: number) {
+      mc = n;
       track.style.transform = `translateX(-${n * 100}%)`;
       dots.forEach((d, i) => d.classList.toggle('active', i === n));
     }
 
-    dots.forEach((dot, i) => dot.addEventListener('click', () => mediGoTo(i)));
+    dots.forEach((d, i) => d.addEventListener('click', () => mGoTo(i)));
 
-    // swipe support
-    let startX = 0;
-    carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    carousel.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) mediGoTo(Math.max(0, Math.min(dots.length - 1, mCurrent + (diff > 0 ? 1 : -1))));
-    });
+    if (dots.length > 1) {
+      let t = setInterval(() => mGoTo((mc + 1) % dots.length), 2000);
+      carousel.addEventListener('mouseenter', () => clearInterval(t));
+      carousel.addEventListener('mouseleave', () => {
+        t = setInterval(() => mGoTo((mc + 1) % dots.length), 2000);
+      });
+    }
   });
 </script>
