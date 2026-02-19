@@ -1,13 +1,14 @@
 ---
 const navItems = [
-  { label: "~/inicio",      href: "/",              id: "inicio"    },
-  { label: "~/proyectos",   href: "/#proyectos",    id: "proyectos" },
-  { label: "~/writeups",    href: "/#writeups",     id: "writeups"  },
-  { label: "~/about",       href: "/#about",        id: "about"     },
-  { label: "~/contacto",    href: "/#contacto",     id: "contacto"  },
+  { label: "~/inicio",      href: "/",                id: "inicio"      },
+  { label: "~/hackathons",  href: "/#hackathons",     id: "hackathons"  },
+  { label: "~/activities",  href: "/#activities",     id: "activities"  },
+  { label: "~/proyectos",   href: "/#proyectos",      id: "proyectos"   },
+  { label: "~/about",       href: "/#about",          id: "about"       },
 ];
 ---
 
+<!-- Desktop sidebar -->
 <aside class="sidebar">
   <div class="sidebar-header">
     <div class="logo-block">
@@ -15,27 +16,23 @@ const navItems = [
       <span class="logo-name">me</span>
       <span class="logo-bracket">]</span>
     </div>
-    <br>
-    <div class="logo-tagline">DevOps -  DevSecOps - Cloud</div>
+    <div class="logo-tagline">DevOps · DevSecOps · Cloud</div>
   </div>
 
   <div class="sidebar-divider"></div>
 
-  <nav class="sidebar-nav">
-    {navItems.map((item, i) => {
-      const isActive = i === 0;
-      return (
-        <a
-          href={item.href}
-          class={`nav-item ${isActive ? "active" : ""}`}
-          data-section={item.id}
-        >
-          <span class="nav-icon">{isActive ? "▶" : "›"}</span>
-          <span class="nav-label">{item.label}</span>
-          <span class="nav-active-bar" style={isActive ? "" : "display:none"} />
-        </a>
-      );
-    })}
+  <nav class="sidebar-nav" id="sidebarNav">
+    {navItems.map((item, i) => (
+      <a
+        href={item.href}
+        class={`nav-item ${i === 0 ? "active" : ""}`}
+        data-section={item.id}
+      >
+        <span class="nav-icon">{i === 0 ? "▶" : "›"}</span>
+        <span class="nav-label">{item.label}</span>
+        <span class="nav-active-bar" style={i === 0 ? "" : "display:none"} />
+      </a>
+    ))}
   </nav>
 
   <div class="sidebar-footer">
@@ -48,16 +45,28 @@ const navItems = [
       <a href="https://github.com/vasileandreipopan" target="_blank" rel="noopener" class="footer-link">Github</a>
       <span class="footer-sep">/</span>
       <a href="https://www.linkedin.com/in/vasile-andrei-popan/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-
     </div>
   </div>
 </aside>
 
+<!-- Mobile bottom nav -->
+<nav class="mobile-nav">
+  {navItems.map((item, i) => (
+    <a
+      href={item.href}
+      class={`mn-item ${i === 0 ? "active" : ""}`}
+      data-section={item.id}
+    >
+      <span class="mn-label">{item.label.replace("~/", "")}</span>
+    </a>
+  ))}
+</nav>
+
 <style>
+  /* ── Desktop sidebar ── */
   .sidebar {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: var(--sidebar-w);
     height: 100vh;
     background: var(--bg-panel);
@@ -68,9 +77,7 @@ const navItems = [
     z-index: 100;
   }
 
-  .sidebar-header {
-    padding: 0 24px 20px;
-  }
+  .sidebar-header { padding: 0 24px 20px; }
 
   .logo-block {
     font-size: 20px;
@@ -78,7 +85,6 @@ const navItems = [
     letter-spacing: 2px;
     line-height: 1;
   }
-
   .logo-bracket { color: var(--border-hi); }
   .logo-name    { color: var(--text); }
 
@@ -86,7 +92,7 @@ const navItems = [
     font-size: 10px;
     color: var(--muted);
     margin-top: 7px;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
   }
 
   .sidebar-divider {
@@ -115,94 +121,92 @@ const navItems = [
     transition: color 0.15s, background 0.15s;
     letter-spacing: 0.2px;
   }
-
-  .nav-item:hover {
-    color: var(--text);
-    background: var(--accent-subtle);
-    text-decoration: none;
-  }
-
-  .nav-item.active {
-    color: var(--accent);
-    background: var(--accent-subtle);
-  }
+  .nav-item:hover { color: var(--text); background: var(--accent-subtle); text-decoration: none; }
+  .nav-item.active { color: var(--accent); background: var(--accent-subtle); }
 
   .nav-active-bar {
     position: absolute;
-    left: 0;
-    top: 50%;
+    left: 0; top: 50%;
     transform: translateY(-50%);
-    width: 3px;
-    height: 55%;
+    width: 3px; height: 55%;
     background: var(--accent);
     border-radius: 0 2px 2px 0;
   }
 
   .nav-icon {
-    font-size: 10px;
-    width: 12px;
-    flex-shrink: 0;
-    color: var(--muted);
+    font-size: 10px; width: 12px;
+    flex-shrink: 0; color: var(--muted);
     transition: color 0.15s;
   }
-
   .nav-item.active .nav-icon,
-  .nav-item:hover .nav-icon {
-    color: var(--accent);
-  }
-
-  .nav-label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .nav-item:hover .nav-icon { color: var(--accent); }
+  .nav-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   .sidebar-footer { padding-top: 4px; }
 
   .footer-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0 24px 8px;
-    font-size: 11px;
-    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 24px 8px; font-size: 11px; color: var(--muted);
   }
-
   .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent);
     animation: pulse 2.5s ease-in-out infinite;
   }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.35; }
-  }
-
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
   .status-text { color: var(--accent-dim); font-size: 11px; }
 
   .footer-links {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0 24px 6px;
-    font-size: 11px;
+    display: flex; align-items: center; gap: 4px;
+    padding: 0 24px 6px; font-size: 11px;
   }
-
-  .footer-link {
-    color: var(--muted);
-    transition: color 0.15s;
-    text-decoration: none;
-  }
+  .footer-link { color: var(--muted); transition: color 0.15s; text-decoration: none; }
   .footer-link:hover { color: var(--accent); text-decoration: none; }
   .footer-sep { color: var(--border-hi); }
 
-  .footer-version {
-    padding: 0 24px;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1px;
+  /* ── Mobile bottom nav ── */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border);
+    padding: 0 0 env(safe-area-inset-bottom, 0);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .mobile-nav::-webkit-scrollbar { display: none; }
+
+  /* Show mobile nav, hide desktop sidebar on small screens */
+  @media (max-width: 768px) {
+    .sidebar   { display: none; }
+    .mobile-nav { display: flex; }
+  }
+
+  .mn-item {
+    flex: 1;
+    min-width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px;
+    font-size: 10px;
+    font-family: var(--font);
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    border-top: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .mn-item.active {
+    color: var(--accent);
+    border-top-color: var(--accent);
+    background: var(--accent-subtle);
+  }
+  .mn-item:hover { color: var(--text); text-decoration: none; }
+
+  .mn-label { font-size: 10px; letter-spacing: 0.2px; }
 </style>

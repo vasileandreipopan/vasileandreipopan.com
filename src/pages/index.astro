@@ -9,7 +9,8 @@ import Proyectos from '../components/Proyectos.astro';
   <Sidebar />
 
   <main class="main-content">
-    <!-- SECCIÓN 1: Inicio -->
+
+    <!-- INICIO -->
     <section class="page-section" id="inicio" data-section="inicio">
       <div class="section-inner hero-inner">
         <div class="hero-meta">
@@ -24,34 +25,46 @@ import Proyectos from '../components/Proyectos.astro';
       </div>
     </section>
 
-    <!-- SECCIÓN 2: Proyectos -->
-    <section class="page-section" id="proyectos" data-section="proyectos">
+    <!-- HACKATHONS -->
+    <section class="page-section" id="hackathons" data-section="hackathons">
       <div class="section-inner proyectos-inner">
         <Proyectos />
       </div>
     </section>
 
-    <!-- SECCIÓN 3: Writeups (placeholder) -->
-    <section class="page-section" id="writeups" data-section="writeups">
+    <!-- ACTIVITIES (placeholder) -->
+    <section class="page-section" id="activities" data-section="activities">
       <div class="section-inner">
         <div class="coming-soon">
-          <span class="cs-prompt">admin@vapopan:~$ cat writeups/index.md</span>
-          <span class="cs-output">// próximamente — CTFs, labs, 0xD3C0D3</span>
+          <span class="cs-prompt">admin@vapopan:~$ cat activities/index.md</span>
+          <span class="cs-output">// próximamente — 0xD3C0D3, CTFs, workshops</span>
           <span class="t-cursor-inline"></span>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓN 4: Contacto (placeholder) -->
-    <section class="page-section" id="contacto" data-section="contacto">
+    <!-- PROYECTOS (placeholder) -->
+    <section class="page-section" id="proyectos" data-section="proyectos">
       <div class="section-inner">
         <div class="coming-soon">
-          <span class="cs-prompt">admin@vapopan:~$ cat contacto.txt</span>
-          <span class="cs-output">// próximamente</span>
+          <span class="cs-prompt">admin@vapopan:~$ ls proyectos/</span>
+          <span class="cs-output">// próximamente — infra, homelab, scripts</span>
           <span class="t-cursor-inline"></span>
         </div>
       </div>
     </section>
+
+    <!-- ABOUT (placeholder) -->
+    <section class="page-section" id="about" data-section="about">
+      <div class="section-inner">
+        <div class="coming-soon">
+          <span class="cs-prompt">admin@vapopan:~$ cat about.txt</span>
+          <span class="cs-output">// próximamente — about & contacto</span>
+          <span class="t-cursor-inline"></span>
+        </div>
+      </div>
+    </section>
+
   </main>
 </BaseLayout>
 
@@ -62,12 +75,10 @@ import Proyectos from '../components/Proyectos.astro';
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    /* dot grid */
     background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 
-  /* Each section = exactly one viewport */
   .page-section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -78,16 +89,11 @@ import Proyectos from '../components/Proyectos.astro';
     position: relative;
   }
 
-  /* Vignette per section */
+  /* Vignette */
   .page-section::before {
     content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse 75% 75% at 50% 50%,
-      transparent 30%,
-      var(--bg) 100%
-    );
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 30%, var(--bg) 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -100,7 +106,7 @@ import Proyectos from '../components/Proyectos.astro';
     padding: 0 48px;
   }
 
-  /* ── Hero ── */
+  /* Hero */
   .hero-inner {
     display: flex;
     flex-direction: column;
@@ -138,29 +144,31 @@ import Proyectos from '../components/Proyectos.astro';
     animation: bounce 1.8s ease-in-out 5s infinite;
   }
 
-  /* ── Coming soon placeholder ── */
+  /* Hackathons section */
+  #hackathons { align-items: center; }
+  .proyectos-inner {
+    width: 100%;
+    max-width: 820px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .proyectos-inner > * { width: 100%; }
+
+  /* Coming soon */
   .coming-soon {
     display: flex;
     flex-direction: column;
     gap: 10px;
     font-family: var(--font);
   }
-
-  .cs-prompt {
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-
-  .cs-output {
-    font-size: 13px;
-    color: var(--muted);
-    padding-left: 4px;
-  }
+  .cs-prompt { font-size: 13px; color: var(--text-dim); }
+  .cs-output  { font-size: 13px; color: var(--muted); padding-left: 4px; }
 
   .t-cursor-inline {
     display: inline-block;
-    width: 8px;
-    height: 14px;
+    width: 8px; height: 14px;
     background: var(--accent);
     vertical-align: middle;
     margin-left: 2px;
@@ -168,74 +176,76 @@ import Proyectos from '../components/Proyectos.astro';
     opacity: 0.6;
   }
 
-  @keyframes blink {
-    0%, 100% { opacity: 0.6; }
-    50%       { opacity: 0; }
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+      /* extra bottom padding for the mobile nav bar */
+      padding-bottom: 60px;
+    }
+
+    .page-section {
+      /* on mobile, allow a bit of breathing room */
+      min-height: 100vh;
+      height: auto;
+      padding: 24px 0;
+    }
+
+    .section-inner {
+      padding: 0 20px;
+      max-width: 100%;
+    }
+
+    .hero-inner { max-width: 100%; }
+
+    .hero-meta { display: none; } /* too cramped on mobile */
+
+    .proyectos-inner { padding: 0 12px; }
   }
 
-  /* Proyectos section */
-  #proyectos {
-    align-items: center;
-    justify-content: center;
-  }
-  .proyectos-inner {
-    width: 100%;
-    max-width: 820px;
-    height: auto;
-    padding: 0 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .proyectos-inner > * {
-    width: 100%;
-    flex: 1;
-    min-height: 0;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(4px); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  @keyframes blink   { 0%, 100% { opacity: 0.6; } 50% { opacity: 0; } }
+  @keyframes bounce  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
 </style>
 
 <script>
-  // Update sidebar active link based on visible section
   const sections = document.querySelectorAll<HTMLElement>('.page-section');
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-item');
+  // Select both sidebar nav items and mobile nav items
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-item, .mn-item');
+
+  function setActive(id: string | null) {
+    navLinks.forEach(link => {
+      const sec = link.getAttribute('data-section');
+      const isActive = sec === id;
+      link.classList.toggle('active', isActive);
+      // sidebar bar indicator
+      const bar = link.querySelector('.nav-active-bar') as HTMLElement | null;
+      if (bar) bar.style.display = isActive ? 'block' : 'none';
+      // sidebar icon
+      const icon = link.querySelector('.nav-icon') as HTMLElement | null;
+      if (icon) icon.textContent = isActive ? '▶' : '›';
+    });
+  }
 
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
+    entries => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute('data-section');
-          navLinks.forEach((link) => {
-            const href = link.getAttribute('href');
-            link.classList.toggle('active', href === `/#${id}` || href === `/${id === 'inicio' ? '' : id}`);
-            const bar = link.querySelector('.nav-active-bar');
-            if (bar) (bar as HTMLElement).style.display = link.classList.contains('active') ? 'block' : 'none';
-          });
-          // update hash without jumping
+          setActive(id);
           history.replaceState(null, '', id === 'inicio' ? '/' : `#${id}`);
         }
       });
     },
-    { threshold: 0.6 }
+    { threshold: 0.5 }
   );
 
-  sections.forEach((s) => observer.observe(s));
+  sections.forEach(s => observer.observe(s));
 
-  // Sidebar nav click -> smooth scroll to section
-  navLinks.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href') ?? '';
-      const sectionId = href.replace('/#', '').replace('/', '') || 'inicio';
-      const target = document.getElementById(sectionId);
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      const sec = link.getAttribute('data-section') ?? 'inicio';
+      const target = document.getElementById(sec);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth' });

@@ -34,6 +34,25 @@ const projects: Project[] = [
     ],
   },
   {
+    id: "lerobot",
+    label: "hackathon",
+    status: "done",
+    title: "LE-PICASSO",
+    org: "NVIDIA-LeRobot Bilbao 2026",
+    desc: "The project allowed users to give voice commands through a web application. An AI model processed the audio, extracted instructions using Named Entity Recognition (NER), and sent them to a robotic arm, which then executed the commands by drawing the requested object.",
+    highlight: "Each teammate participated in every aspect of the project.",
+    tags: ["NER", "LeRobot arms", "Robotics", "Webapp", "Simulation"],
+    links: [
+    { label: "repo", href: "https://github.com/vasileandreipopan/lePicasso" },
+    { label: "video", href: "https://www.youtube.com/watch?v=32cV6rU5I34" },
+    ],
+    media: [
+      { type: "img", src: "/media/lerobot.png", alt: "Presentation" },
+      { type: "img", src: "/media/lerobot2.jpg", alt: "Random photo" },
+      { type: "img", src: "/media/lerobot3.jpg", alt: "Random photo-2" },
+    ],
+  },
+  {
     id: "nasa-exoplanets",
     label: "hackathon",
     status: "done",
@@ -41,7 +60,7 @@ const projects: Project[] = [
     org: "NASA Space Apps Challenge 2025",
     desc: "Web platform powered by an AI model to detect exoplanets using NASA’s Kepler dataset. It includes an 'Educational' mode with interactive visualizations designed for the general public to understand how exoplanet detection works and a 'Professional' mode where researchers can upload and analyze real light curves using our trained model.",
     highlight: "During the development, as coordinator and full-stack contributor, I worked across AI, frontend, and project direction.",
-    tags: ["Python", "ML", "NASA Kepler", "Data Viz", "React"],
+    tags: ["Python", "ML", "NASA Kepler Data", "Data Viz", "React"],
     links: [{ label: "+info", href: "https://www.spaceappschallenge.org/2025/find-a-team/rookie-rockets/" }],
     media: [
       { type: "img", src: "/media/nasaHackathon-team.jpeg", alt: "team" },
@@ -50,32 +69,17 @@ const projects: Project[] = [
     ],
   },
   {
-    id: "lerobot",
-    label: "hackathon",
-    status: "done",
-    title: "LE-PICASSO",
-    org: "LeRobot Bilbao Hackathon",
-    desc: "The project allowed users to give voice commands through a web application. An AI model processed the audio, extracted instructions using Named Entity Recognition (NER), and sent them to a robotic arm, which then executed the commands by drawing the requested object.",
-    highlight: "Pipeline end-to-end: NLP en tiempo real + robótica + web.",
-    tags: ["NER", "NLP", "LeRobot", "Robotics", "Webapp"],
-    links: [{ label: "repo ↗", href: "https://github.com/vasileandreipopan/lePicasso" }],
-    media: [
-      { type: "img", src: "/media/lerobot.png", alt: "Presentation" },
-      { type: "img", src: "/media/lerobot2.jpg", alt: "Random photo" },
-    ],
-  },
-  {
     id: "hackupc",
     label: "hackathon",
     status: "done",
     title: "Travel Recommender",
     org: "HackUPC 2024 · Skyscanner Challenge",
-    desc: "App web que recomienda destinos de viaje según preferencias, presupuesto y sostenibilidad. Integración con la API de Skyscanner para búsqueda de vuelos en tiempo real.",
-    highlight: "Enfoque en viaje sostenible y accesibilidad de datos.",
-    tags: ["API Integration", "Frontend", "Skyscanner API"],
-    links: [{ label: "repo ↗", href: "#" }],
+    desc: "We developed a web application that addresses the challenge proposed by Skyscanner, helping groups of friends find the perfect travel destination by considering their preferences, budget and sustainability.",
+    highlight: "This is special because it was my first hackathon project!!",
+    tags: ["HTML-CSS-JS", "Java", "API Integration"],
+    links: [{ label: "repo", href: "https://github.com/pablo10diez2/hackupc" }],
     media: [
-      // { type: "img", src: "/media/hackupc-1.png", alt: "UI" },
+      { type: "img", src: "/media/hackupc2025.jpeg", alt: "UI" },
     ],
   },
 ];
@@ -101,7 +105,7 @@ const projects: Project[] = [
               <span class="pv-prompt">
                 <span class="pu">admin</span>
                 <span class="ps"> : ~ $ </span>
-                <span class="pc">ls proyectos/</span>
+                <span class="pc"> ls proyectos/</span>
               </span>
               <span class="pv-counter">
                 <span class="pv-cur" id={i === 0 ? 'pvCur' : undefined}>
@@ -465,6 +469,55 @@ const projects: Project[] = [
     background: var(--accent);
     width: 42px;
   }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .pv-shell { gap: 12px; }
+
+    /* Stack card vertically on mobile */
+    .pv-card {
+      flex-direction: column;
+      height: auto;
+    }
+
+    /* Cards container: auto height on mobile */
+    .pv-cards {
+      height: auto;
+      min-height: 0;
+    }
+
+    /* Media takes full width, fixed height */
+    .pv-media {
+      width: 100%;
+      height: 220px;
+      flex-shrink: 0;
+    }
+
+    /* Info area: normal flow */
+    .pv-info {
+      padding: 16px;
+      gap: 10px;
+      height: auto;
+    }
+
+    .pv-title { font-size: 16px; }
+    .pv-desc  { font-size: 11px; -webkit-line-clamp: 4; }
+
+    /* Arrows: smaller, tighter */
+    .pv-arrow {
+      width: 28px;
+      height: 28px;
+      font-size: 12px;
+    }
+
+    .pv-stage { gap: 6px; }
+
+    /* Dots row */
+    .pv-bottom-dots { gap: 6px; }
+    .pvd { width: 22px; }
+    .pvd.active { width: 34px; }
+  }
+
 </style>
 
 <script>
