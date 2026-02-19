@@ -472,50 +472,58 @@ const projects: Project[] = [
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    .pv-shell { gap: 12px; }
+    .pv-shell { gap: 10px; }
 
-    /* Stack card vertically on mobile */
-    .pv-card {
-      flex-direction: column;
-      height: auto;
-    }
+    .pv-stage { gap: 4px; }
 
-    /* Cards container: auto height on mobile */
-    .pv-cards {
-      height: auto;
-      min-height: 0;
-    }
-
-    /* Media takes full width, fixed height */
-    .pv-media {
-      width: 100%;
-      height: 220px;
-      flex-shrink: 0;
-    }
-
-    /* Info area: normal flow */
-    .pv-info {
-      padding: 16px;
-      gap: 10px;
-      height: auto;
-    }
-
-    .pv-title { font-size: 16px; }
-    .pv-desc  { font-size: 11px; -webkit-line-clamp: 4; }
-
-    /* Arrows: smaller, tighter */
+    /* Arrows: small circles */
     .pv-arrow {
       width: 28px;
       height: 28px;
       font-size: 12px;
+      flex-shrink: 0;
     }
 
-    .pv-stage { gap: 6px; }
+    /* Cards container needs explicit height on mobile
+       so position:absolute children have a reference */
+    .pv-cards {
+      height: 520px; /* media 220px + info ~300px */
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-    /* Dots row */
+    /* Stack card vertically */
+    .pv-card {
+      flex-direction: column;
+      height: 100%; /* fills the 520px container */
+    }
+
+    /* Media: fixed height, full width */
+    .pv-media {
+      width: 100%;
+      height: 200px;
+      flex-shrink: 0;
+    }
+
+    /* Info: takes remaining space */
+    .pv-info {
+      flex: 1;
+      padding: 14px 16px 12px;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .pv-title { font-size: 15px; line-height: 1.2; }
+    .pv-desc  { font-size: 11px; line-height: 1.6; -webkit-line-clamp: 4; }
+    .pv-highlight { font-size: 10px; padding: 6px 10px; }
+    .pv-tag { font-size: 9px; }
+    .pv-badge { font-size: 9px; }
+    .pv-org { font-size: 10px; }
+
+    /* Dots */
     .pv-bottom-dots { gap: 6px; }
-    .pvd { width: 22px; }
-    .pvd.active { width: 34px; }
+    .pvd { width: 20px; }
+    .pvd.active { width: 32px; }
   }
 
 </style>

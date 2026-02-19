@@ -180,27 +180,33 @@ import Proyectos from '../components/Proyectos.astro';
   @media (max-width: 768px) {
     .main-content {
       margin-left: 0;
-      /* extra bottom padding for the mobile nav bar */
-      padding-bottom: 60px;
+      padding-bottom: 56px; /* space for mobile nav */
     }
 
+    /* Keep 100vh snap on mobile too */
     .page-section {
-      /* on mobile, allow a bit of breathing room */
-      min-height: 100vh;
-      height: auto;
-      padding: 24px 0;
+      height: 100vh;
+      height: 100dvh; /* dynamic viewport height — accounts for browser chrome */
+      padding: 0;
     }
 
     .section-inner {
-      padding: 0 20px;
+      padding: 0 16px;
       max-width: 100%;
     }
 
-    .hero-inner { max-width: 100%; }
+    .hero-inner {
+      max-width: 100%;
+      padding-top: 0;
+      gap: 16px;
+    }
 
-    .hero-meta { display: none; } /* too cramped on mobile */
+    .hero-meta { display: none; }
 
-    .proyectos-inner { padding: 0 12px; }
+    .proyectos-inner {
+      padding: 0 8px;
+      justify-content: center;
+    }
   }
 
   @keyframes blink   { 0%, 100% { opacity: 0.6; } 50% { opacity: 0; } }
