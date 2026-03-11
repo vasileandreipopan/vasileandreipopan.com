@@ -1,0 +1,250 @@
+---
+---
+<section id="about" class="section">
+
+  <div class="spacer"></div>
+
+  <span class="sec-label">About</span>
+
+  <div class="about-body reveal">
+    <p class="about-text">
+      I’m a Computer Science student interested in building reliable and secure systems. I’ve developed a strong interest in systems and infrastructure and my internship experience has reinforced my motivation to keep learning in this area. I’m motivated by complex challenges and enjoy working through difficult problems while learning and collaborating with others.
+    </p>
+
+    <div class="dino-container">
+      <canvas id="dinoCanvas"></canvas>
+      <p class="dino-hint mono" id="dinoHint">press <span class="key">space</span> or tap to play</p>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+</section>
+
+<style>
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .dino-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #dinoCanvas {
+    display: block;
+    width: 100%;
+    height: 110px;
+    border-bottom: 2px solid #000;
+    cursor: pointer;
+    image-rendering: pixelated;
+  }
+
+  .dino-hint {
+    font-size: 0.68rem;
+    color: #777;
+    letter-spacing: 0.06em;
+  }
+
+  .key {
+    border: 1px solid #999;
+    padding: 0.05rem 0.3rem;
+    font-size: 0.65rem;
+  }
+</style>
+
+<script is:inline>
+(function() {
+  function initDino() {
+    const canvas = document.getElementById('dinoCanvas');
+    const hint   = document.getElementById('dinoHint');
+    if (!canvas) return;
+
+    const W = canvas.offsetWidth;
+    const H = 110;
+    if (W === 0) { setTimeout(initDino, 50); return; }
+
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = W * DPR;
+    canvas.height = H * DPR;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(DPR, DPR);
+
+    const GY = H - 16; // ground y
+
+    let status = 'idle';
+    let frame = 0, score = 0, hi = 0, speed = 0;
+    let raf = null;
+
+    const dino = { x: 50, y: GY, vy: 0, grounded: true };
+    const DW = 18, DH = 24;
+    const JUMP = -12, G = 0.55;
+
+    let obs = [];
+    let nextObs = 0;
+    let clouds = [{ x: W * 0.3, y: 22 }, { x: W * 0.7, y: 14 }];
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf);
+      dino.y = GY; dino.vy = 0; dino.grounded = true;
+      obs = []; score = 0; speed = 5; nextObs = 80; frame = 0;
+      status = 'running';
+      hint.style.opacity = '0';
+      raf = requestAnimationFrame(loop);
+    }
+
+    function doJump() {
+      if (status === 'idle' || status === 'dead') { start(); return; }
+      if (dino.grounded) { dino.vy = JUMP; dino.grounded = false; }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); doJump(); }
+    });
+    canvas.addEventListener('click', doJump);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); doJump(); }, { passive: false });
+
+    function loop() {
+      frame++;
+      score = Math.floor(frame / 6);
+      speed = 5 + score / 150;
+
+      // physics
+      dino.vy += G;
+      dino.y  += dino.vy;
+      if (dino.y >= GY) { dino.y = GY; dino.vy = 0; dino.grounded = true; }
+
+      // spawn obstacles
+      nextObs--;
+      if (nextObs <= 0) {
+        obs.push({ x: W + 20, h: 24 + Math.floor(Math.random() * 20) });
+        nextObs = 55 + Math.floor(Math.random() * 70);
+      }
+      obs = obs.filter(o => o.x > -30);
+      obs.forEach(o => { o.x -= speed; });
+
+      // clouds
+      clouds.forEach(c => { c.x -= 0.5; if (c.x < -80) c.x = W + 60; });
+
+      // collision
+      const margin = 3;
+      for (const o of obs) {
+        const ow = 16;
+        const xOverlap = dino.x + margin < o.x + ow - margin && dino.x + DW - margin > o.x + margin;
+        const yOverlap = dino.y > GY - o.h && dino.y - DH + margin < GY;
+        if (xOverlap && yOverlap) {
+          status = 'dead';
+          if (score > hi) hi = score;
+          draw(true);
+          hint.style.opacity = '1';
+          hint.innerHTML = 'press <span class="key">space</span> or tap to restart';
+          return;
+        }
+      }
+
+      draw(false);
+      raf = requestAnimationFrame(loop);
+    }
+
+    function draw(dead) {
+      ctx.clearRect(0, 0, W, H);
+
+      // ground
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, GY + 2, W, 1);
+      // pebbles
+      ctx.fillStyle = '#bbb';
+      for (let i = 0; i < 8; i++) {
+        const px = ((i * 113 + frame * speed * 0.25) % (W + 10));
+        ctx.fillRect(px, GY + 5, 3, 1);
+      }
+
+      // clouds
+      ctx.fillStyle = '#ddd';
+      clouds.forEach(c => {
+        ctx.fillRect(c.x, c.y, 50, 8);
+        ctx.fillRect(c.x + 10, c.y - 5, 30, 7);
+      });
+
+      // obstacles (cacti)
+      ctx.fillStyle = '#000';
+      obs.forEach(o => {
+        const ow = 16, cx = o.x + ow / 2;
+        const armY = GY - Math.floor(o.h * 0.55);
+        ctx.fillRect(cx - 3, GY - o.h, 6, o.h);       // stem
+        ctx.fillRect(o.x,       armY, 6, 4);            // left arm h
+        ctx.fillRect(cx + 3,    armY, 6, 4);            // right arm h
+        ctx.fillRect(o.x,       armY - 10, 6, 11);      // left arm top
+        ctx.fillRect(cx + 3,    armY - 10, 6, 11);      // right arm top
+      });
+
+      // dino body
+      const dx = dino.x, dy = dino.y;
+      ctx.fillStyle = '#000';
+      ctx.fillRect(dx,      dy - DH,      DW,     DH - 6);   // body
+      ctx.fillRect(dx + 3,  dy - DH - 8,  14,     10);        // head
+      ctx.fillStyle = dead ? '#000' : '#fff';
+      ctx.fillRect(dx + 12, dy - DH - 5,  4,      4);         // eye white
+      ctx.fillStyle = '#000';
+      ctx.fillRect(dx + 13, dy - DH - 4,  2,      2);         // pupil
+      ctx.fillRect(dx + DW, dy - DH + 5,  5,      3);         // arm
+
+      // legs
+      const lp = dino.grounded ? Math.floor(frame / 5) % 2 : 0;
+      if (!dead) {
+        if (lp === 0) {
+          ctx.fillRect(dx + 2,  dy - 8, 5, 8);
+          ctx.fillRect(dx + 10, dy - 4, 5, 4);
+        } else {
+          ctx.fillRect(dx + 2,  dy - 4, 5, 4);
+          ctx.fillRect(dx + 10, dy - 8, 5, 8);
+        }
+      } else {
+        ctx.fillRect(dx + 2,  dy - 7, 5, 7);
+        ctx.fillRect(dx + 10, dy - 7, 5, 7);
+      }
+
+      // score
+      ctx.fillStyle = '#aaa';
+      ctx.font = '600 11px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(`HI ${String(hi).padStart(5,'0')}  ${String(score).padStart(5,'0')}`, W - 6, 14);
+      ctx.textAlign = 'left';
+
+      if (dead) {
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 12px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W / 2, H / 2);
+        ctx.textAlign = 'left';
+      }
+    }
+
+    // idle state — just show dino standing
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, GY + 2, W, 1);
+    ctx.fillRect(dino.x, dino.y - DH, DW, DH - 6);
+    ctx.fillRect(dino.x + 3, dino.y - DH - 8, 14, 10);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(dino.x + 12, dino.y - DH - 5, 4, 4);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(dino.x + 13, dino.y - DH - 4, 2, 2);
+    ctx.fillRect(dino.x + 2, dino.y - 8, 5, 8);
+    ctx.fillRect(dino.x + 10, dino.y - 4, 5, 4);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDino);
+  } else {
+    initDino();
+  }
+})();
+</script>

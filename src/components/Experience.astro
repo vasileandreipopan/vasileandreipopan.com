@@ -1,0 +1,141 @@
+---
+---
+<section id="experience" class="section">
+
+  <div class="spacer"></div>
+
+  <span class="sec-label">Studies & Experience</span>
+
+  <div class="entries">
+
+    <div class="entry reveal">
+      <div class="entry-left">
+        <span class="entry-type mono">Education</span>
+        <span class="entry-date mono">2023 – Present</span>
+      </div>
+      <div class="entry-right">
+        <h3 class="entry-title">Computer Science</h3>
+        <p class="entry-place mono">University of Deusto — Bilbao, Spain</p>
+        <ul class="entry-bullets">
+          <li>3rd year.</li>
+          <li>Co-founder of 0xdecode community.</li>
+          <ul class="entry-bullets">
+            <li>English C1 course.</li>
+            <li>Creation! Innovation and entrepreneurship.</li>
+          </ul>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry-divider"></div>
+
+    <div class="entry reveal">
+      <div class="entry-left">
+        <span class="entry-type mono">Experience</span>
+        <span class="entry-date mono">Dec 2025 – Present</span>
+      </div>
+      <div class="entry-right">
+        <div class="entry-header">
+          <h3 class="entry-title">SRE & DevOps Engineering Intern</h3>
+          <span class="entry-tag">[CURRENT]</span>
+        </div>
+        <p class="entry-place mono">MasOrange — Bilbao, Spain</p>
+        <ul class="entry-bullets">
+          <li>Set up a production-grade local Kubernetes environment using kind. Deployed a containerised Python microservice with liveness/readiness probes, Deployment controllers, ReplicaSets, and ClusterIP Services.</li>
+          <li>Deployed the full kube-prometheus-stack via Helm. Instrumented the app with a /metrics endpoint wired via ServiceMonitor CRD (automatic target discovery, no manual scrape config).</li>
+          <li>Configured Alertmanager. Slack routing with Kubernetes Secrets, AlertmanagerConfig CRDs, and Go-template formatting.</li>
+          <li><b>Building an Auto-Remediation Agent:</b> pattern-matching engine maps live alerts to a runbook catalog (OOMKilled, PodCrashLooping, DiskSpaceFull, ...) and executes fixes via the Kubernetes API.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="spacer"></div>
+
+</section>
+
+<style>
+  .entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 1.75rem 0;
+  }
+
+  .entry-divider {
+    border-top: 1px solid var(--light);
+  }
+
+  .entry-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-top: 0.15rem;
+  }
+
+  .entry-type {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  .entry-date {
+    font-size: 0.72rem;
+    color: var(--dark);
+  }
+
+  .entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .entry-title {
+    font-family: var(--font-sys);
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .entry-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    background: var(--black);
+    color: var(--white);
+    padding: 0.1rem 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .entry-place {
+    font-size: 0.75rem;
+    color: var(--dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .entry-bullets {
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .entry-bullets li { list-style-type: square; }
+
+  @media (max-width: 580px) {
+    .entry { grid-template-columns: 1fr; gap: 0.5rem; }
+    .entry-left { flex-direction: row; gap: 1rem; }
+  }
+</style>

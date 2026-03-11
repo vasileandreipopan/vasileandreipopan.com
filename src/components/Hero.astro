@@ -1,0 +1,131 @@
+---
+---
+<section id="hero" class="section">
+
+  <div class="spacer"></div>
+
+  <div class="hero-center">
+    <p class="hero-label mono">[ COMPUTER SCIENCE STUDENT ]</p>
+
+    <h1 class="hero-name">
+      <span id="typewriter-name"></span><span class="cursor blink">_</span>
+    </h1>
+
+    <p class="hero-sub mono">
+      &gt; <span id="rotating-sub"></span>
+    </p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="hero-bottom mono">
+    <span class="hero-loc">Bilbao, Spain · 2026</span>
+    <span class="hero-scroll">scroll ↓</span>
+  </div>
+
+</section>
+
+<style>
+  .hero-center {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .hero-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--dark);
+  }
+
+  .hero-name {
+    font-family: var(--font-sys);
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    font-weight: bold;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .cursor { color: var(--black); }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--dark);
+    letter-spacing: 0.04em;
+    min-height: 1.4rem;
+  }
+
+  .spacer { flex: 1; }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.7rem;
+    color: var(--dark);
+    letter-spacing: 0.1em;
+    border-top: 1px solid var(--black);
+    padding-top: 0.6rem;
+    padding-bottom: 0.5rem;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const fullName = "Vasile Andrei Popan";
+    const nameEl = document.getElementById('typewriter-name');
+    const subEl = document.getElementById('rotating-sub');
+    let ni = 0;
+
+    const lines = [
+      "kubectl apply -f career.yaml",
+      "cat cv.txt",
+      "python3 aboutme.py",
+      "ls -la /home/vasileandreipopan",
+      "status: caffeinated and containerised",
+      "CKA exam loading... ██████░░░░ 60%",
+    ];
+    let li = 0;
+
+    function typeName() {
+      if (ni < fullName.length) {
+        nameEl.textContent += fullName.charAt(ni++);
+        setTimeout(typeName, 65);
+      } else {
+        setTimeout(showLine, 400);
+      }
+    }
+
+    function showLine() {
+      const line = lines[li % lines.length];
+      subEl.textContent = '';
+      let ci = 0;
+      function typeChar() {
+        if (ci < line.length) {
+          subEl.textContent += line.charAt(ci++);
+          setTimeout(typeChar, 32);
+        } else {
+          setTimeout(eraseLine, 2200);
+        }
+      }
+      typeChar();
+    }
+
+    function eraseLine() {
+      const cur = subEl.textContent;
+      let ci = cur.length;
+      function eraseChar() {
+        if (ci > 0) {
+          subEl.textContent = cur.slice(0, --ci);
+          setTimeout(eraseChar, 18);
+        } else {
+          li++;
+          setTimeout(showLine, 400);
+        }
+      }
+      eraseChar();
+    }
+
+    setTimeout(typeName, 300);
+  });
+</script>

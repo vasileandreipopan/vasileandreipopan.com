@@ -1,0 +1,139 @@
+---
+const groups = [
+  { cat: 'Containers & Orchestration', items: ['Docker', 'Kubernetes', 'kind', 'kubectl', 'Helm', 'k9s'], note: 'CKA exam — target Jun 2026' },
+  { cat: 'Observability & Alerting',   items: ['Prometheus', 'Grafana', 'Alertmanager', 'ServiceMonitor', 'PrometheusRule', 'AlertmanagerConfig'] },
+  { cat: 'Languages & Frameworks',     items: ['Python', 'Java', 'HTML/CSS', 'FastAPI', 'REST APIs', 'Nginx'] },
+  { cat: 'Databases & DevOps',         items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Git', 'GitHub', 'Linux', 'Docker Compose'] },
+];
+
+const languages = [
+  { lang: 'English',  level: 'Fluent' },
+  { lang: 'Spanish',  level: 'Native' },
+  { lang: 'Romanian', level: 'Native' },
+  { lang: 'Basque',   level: 'Native' },
+];
+---
+
+<div class="section-wrap">
+  <section id="skills" class="section">
+    <span class="sec-label">Skills</span>
+
+    <table class="skills-table">
+      <tbody>
+        {groups.map(g => (
+          <tr class="reveal">
+            <td class="cat-cell mono">{g.cat}</td>
+            <td class="items-cell">
+              {g.items.join(' &nbsp;·&nbsp; ')}
+              {g.note && <span class="skill-note mono">&nbsp; * {g.note}</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+
+    <div class="bottom-row reveal">
+      <div class="lang-block">
+        <h4 class="sub-head mono">LANGUAGES</h4>
+        <table class="lang-table">
+          <tbody>
+            {languages.map(l => (
+              <tr class="reveal">
+                <td class="lang-name">{l.lang}</td>
+                <td class="lang-level mono">{l.level}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ctf-block">
+        <h4 class="sub-head mono">EXTRACURRICULAR</h4>
+        <p class="ctf-title"><strong>0xdecode</strong> &mdash; University of Deusto</p>
+        <p class="ctf-desc">CTF team ranked Top 2 in Spain on CTFtime.org. Competed in cryptography and binary exploitation. Co-organiser of workshops and summer schools.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* ── Skills table ── */
+  .skills-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .skills-table tr {
+    border-bottom: 1px solid var(--black);
+  }
+  .skills-table tr:first-child {
+    border-top: 1px solid var(--black);
+  }
+
+  .cat-cell {
+    font-size: 0.72rem;
+    color: var(--dark);
+    vertical-align: top;
+    padding: 0.65rem 1.5rem 0.65rem 0;
+    white-space: nowrap;
+    width: 220px;
+  }
+
+  .items-cell {
+    padding: 0.65rem 0;
+    vertical-align: top;
+    line-height: 1.7;
+  }
+
+  .skill-note {
+    font-size: 0.68rem;
+    color: var(--dark);
+    font-style: italic;
+  }
+
+  /* ── Bottom ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sub-head {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+  }
+
+  .lang-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .lang-table tr { border-bottom: 1px solid var(--black); }
+  .lang-table tr:first-child { border-top: 1px solid var(--black); }
+
+  .lang-name { padding: 0.4rem 1rem 0.4rem 0; }
+
+  .lang-level {
+    font-size: 0.68rem;
+    color: var(--dark);
+    text-align: right;
+  }
+
+  .ctf-title { font-size: 0.9rem; margin-bottom: 0.35rem; }
+  .ctf-desc  { font-size: 0.85rem; color: var(--dark); }
+
+  @media (max-width: 560px) {
+    .bottom-row { grid-template-columns: 1fr; }
+    .cat-cell { display: block; width: auto; padding-bottom: 0.1rem; }
+    .items-cell { display: block; }
+    .skills-table, .skills-table tbody, .skills-table tr, .skills-table td {
+      display: block;
+    }
+  }
+</style>

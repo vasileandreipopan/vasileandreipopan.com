@@ -1,0 +1,291 @@
+---
+---
+<section id="hackathons" class="section">
+
+  <div class="spacer"></div>
+
+  <span class="sec-label">Hackathons</span>
+
+  <div class="carousel">
+
+    <div class="slide active">
+      <div class="slide-meta mono">
+        <span class="slide-event">NVIDIA Hackathon</span>
+        <span class="slide-loc">Bilbao, Spain · 2025</span>
+      </div>
+      <div class="slide-body">
+        <div class="slide-info">
+          <h3 class="slide-title">LeRobot Bilbao</h3>
+          <p class="slide-type mono">Team Project · AI, Robotics & Web Development</p>
+          <ul class="slide-bullets">
+            <li>Team built a voice-controlled robotic arm pipeline: users issue spoken commands via a web app and an AI model processes the audio and extracts structured drawing instructions using NER (Named Entity Recognition).</li>
+            <li>My participation involved simulating the robot arm movement in Matplotlib. Traced the drawing paths visually to validate them before sending to hardware. Once the simulation looked correct, the instructions were transmitted to the real physical arm for execution.</li>
+          </ul>
+          <div class="slide-links mono">
+            <a href="https://github.com/vasileandreipopan/lePicasso" target="_blank" rel="noopener">GitHub →</a>
+            <a href="https://www.youtube.com/watch?v=32cV6rU5I34" target="_blank" rel="noopener">Video →</a>
+          </div>
+          <p class="slide-stack mono">Python · NLP / NER · Robotics · Web</p>
+        </div>
+        <div class="slide-photos grid-3">
+          <div class="photo-wrap span2"><img src="/media/lerobot.png" alt="LeRobot 1" loading="lazy" /></div>
+          <div class="photo-wrap"><img src="/media/lerobot2.jpg" alt="LeRobot 2" loading="lazy" /></div>
+          <div class="photo-wrap"><img src="/media/lerobot3.jpg" alt="LeRobot 3" loading="lazy" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-meta mono">
+        <span class="slide-event">NASA Space Apps Challenge</span>
+        <span class="slide-loc">Bilbao, Spain · 2025</span>
+      </div>
+      <div class="slide-body">
+        <div class="slide-info">
+          <h3 class="slide-title">Exoplanet Detection</h3>
+          <p class="slide-type mono">Team Project · AI, Machine Learning & Web Development</p>
+          <ul class="slide-bullets">
+            <li>Team developed an AI/ML-powered web platform that detects exoplanets from open-source datasets such as NASA's Kepler dataset.</li>
+            <li><strong>Didactic Mode:</strong> Enables students and the public to explore how exoplanet detection works through interactive visualisations.</li>
+            <li><strong>Professional Mode:</strong> Allows researchers to upload and analyse real light curve datasets with our trained model.</li>
+          </ul>
+          <div class="slide-links mono">
+            <a href="https://www.spaceappschallenge.org/2025/find-a-team/rookie-rockets/" target="_blank" rel="noopener">Info →</a>
+          </div>
+          <p class="slide-stack mono">Python · AI/ML · NASA Kepler · Data Viz</p>
+        </div>
+        <div class="slide-photos grid-3">
+          <div class="photo-wrap span2"><img src="/media/nasaHackathon-team.jpeg" alt="NASA team" loading="lazy" /></div>
+          <div class="photo-wrap"><img src="/media/decodeNasaHackathon.jpeg" alt="NASA hackathon" loading="lazy" /></div>
+          <div class="photo-wrap"><img src="/media/presentationNasa.jpeg" alt="NASA presentation" loading="lazy" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-meta mono">
+        <span class="slide-event">HackUPC 2024</span>
+        <span class="slide-loc">Barcelona, Spain · 2024</span>
+      </div>
+      <div class="slide-body">
+        <div class="slide-info">
+          <h3 class="slide-title">Skyscanner Challenge</h3>
+          <p class="slide-type mono">Team Project · Use of APIs & Web Development</p>
+          <ul class="slide-bullets">
+            <li>Developed a web app that helps users find travel destinations based on preferences, budget, and sustainability.</li>
+            <li>Focused on frontend development and API integration with the Skyscanner API.</li>
+          </ul>
+          <div class="slide-links mono">
+            <a href="https://github.com/pablo10diez2/hackupc" target="_blank" rel="noopener">GitHub →</a>
+          </div>
+        </div>
+        <div class="slide-photos grid-1">
+          <div class="photo-wrap"><img src="/media/hackupc2025.jpeg" alt="HackUPC 2024" loading="lazy" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="arrow" id="hack-prev" aria-label="Previous">←</button>
+      <div class="dots" id="hack-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="arrow" id="hack-next" aria-label="Next">→</button>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lb-close">×</button>
+    <img class="lb-img" id="lb-img" src="" alt="" />
+  </div>
+
+  <div class="spacer"></div>
+
+</section>
+
+<style>
+  .carousel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide { display: none; flex-direction: column; gap: 0.9rem; animation: fadein 0.3s ease; }
+  .slide.active { display: flex; }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .slide-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: var(--dark);
+  }
+
+  .slide-event { text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.14em; }
+
+  .slide-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .slide-title {
+    font-family: var(--font-sys);
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .slide-desc {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 0.6rem;
+  }
+
+  .slide-desc { font-size: 0.9rem; line-height: 1.75; margin-bottom: 0.6rem; }
+  .slide-type { font-size: 0.68rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .slide-stack { font-size: 0.7rem; color: var(--dark); margin-top: 0.5rem; }
+
+  .slide-bullets {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+  .slide-bullets li { list-style-type: square; }
+
+  .slide-links {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.75rem;
+  }
+  .slide-links a { color: var(--black); }
+
+  /* photo grids */
+  .slide-photos { display: grid; gap: 4px; }
+  .grid-1 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+
+  .photo-wrap {
+    overflow: hidden;
+    background: var(--light);
+    cursor: zoom-in;
+  }
+
+  .photo-wrap:not(.span2) { aspect-ratio: 4/3; }
+  .span2 { grid-column: 1 / -1; aspect-ratio: 16/7; }
+
+  .photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+  .photo-wrap:hover img { filter: grayscale(0%); transform: scale(1.02); }
+
+  /* controls */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .arrow {
+    background: none;
+    border: 1px solid var(--black);
+    font-size: 1rem;
+    width: 2rem; height: 2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    font-family: var(--font-mono);
+  }
+  .arrow:hover { background: var(--black); color: var(--white); }
+
+  .dots { display: flex; gap: 0.4rem; }
+  .dot { width: 6px; height: 6px; border: 1px solid var(--black); border-radius: 50%; cursor: pointer; transition: background 0.2s; }
+  .dot.active { background: var(--black); }
+
+  /* lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+
+  .lb-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    display: block;
+  }
+
+  .lb-close {
+    position: absolute;
+    top: 1.25rem; right: 1.5rem;
+    background: none; border: none;
+    color: #fff; font-size: 2rem;
+    cursor: pointer; line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .lb-close:hover { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .slide-body { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('#hackathons .slide');
+    const dots   = document.querySelectorAll('#hack-dots .dot');
+    let cur = 0;
+
+    function go(n) {
+      slides[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots[cur].classList.add('active');
+    }
+
+    document.getElementById('hack-prev').addEventListener('click', () => go(cur - 1));
+    document.getElementById('hack-next').addEventListener('click', () => go(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+
+    // lightbox
+    const lb    = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+
+    document.querySelectorAll('#hackathons .photo-wrap img').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lb.classList.add('open');
+      });
+    });
+
+    document.getElementById('lb-close').addEventListener('click', () => lb.classList.remove('open'));
+    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  });
+</script>
