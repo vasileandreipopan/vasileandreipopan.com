@@ -82,7 +82,6 @@ const hackathons: Hackathon[] = [
 
 <div class="hk-shell">
 
-  <!-- Nav header -->
   <div class="hk-nav">
     <div class="hk-prompt">
       <span class="hk-u">admin</span><span class="hk-s"> : ~ $ </span><span class="hk-c">ls hackathons/</span>
@@ -94,7 +93,6 @@ const hackathons: Hackathon[] = [
     </div>
   </div>
 
-  <!-- Slides -->
   <div class="hk-slides" id="hkSlides">
     {hackathons.map((h, i) => (
       <div class={`hk-slide ${i === 0 ? 'active' : ''}`} data-index={i}>
@@ -169,7 +167,6 @@ const hackathons: Hackathon[] = [
     ))}
   </div>
 
-  <!-- Bottom dots -->
   <div class="hk-dots">
     {hackathons.map((_, i) => (
       <button class={`hk-dot ${i === 0 ? 'active' : ''}`} data-i={i} aria-label={`Hackathon ${i+1}`} />
@@ -187,7 +184,6 @@ const hackathons: Hackathon[] = [
     gap: 16px;
   }
 
-  /* ── Nav bar ── */
   .hk-nav {
     display: flex;
     align-items: center;
@@ -230,7 +226,6 @@ const hackathons: Hackathon[] = [
   #hkCur { color: var(--text); font-weight: 600; }
   .hk-csep { color: var(--border-hi); }
 
-  /* ── Slides container ── */
   .hk-slides {
     position: relative;
     width: 100%;
@@ -247,7 +242,7 @@ const hackathons: Hackathon[] = [
     to   { opacity: 1; transform: translateX(0); }
   }
 
-  /* ── Card: two columns ── */
+
   .hk-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -258,7 +253,7 @@ const hackathons: Hackathon[] = [
     min-height: 360px;
   }
 
-  /* ── Photo column ── */
+
   .hk-photo-col {
     background: var(--term-bg);
     display: flex;
@@ -284,7 +279,7 @@ const hackathons: Hackathon[] = [
     transition: opacity 0.2s;
   }
 
-  /* Thumbs strip */
+
   .hk-thumbs {
     display: flex;
     gap: 5px;
@@ -311,7 +306,7 @@ const hackathons: Hackathon[] = [
   .hk-thumb.active { opacity: 1; border-color: var(--accent); }
   .hk-thumb:hover  { opacity: 0.8; }
 
-  /* No photo */
+
   .hk-no-photo {
     flex: 1;
     display: flex; flex-direction: column;
@@ -321,7 +316,6 @@ const hackathons: Hackathon[] = [
   .hk-no-icon { font-size: 28px; color: #3a3a38; }
   .hk-no-txt  { font-size: 11px; color: #5a5a56; }
 
-  /* ── Info column ── */
   .hk-info-col {
     padding: 28px 28px 24px;
     display: flex;
@@ -376,7 +370,6 @@ const hackathons: Hackathon[] = [
   }
   .hk-link:hover { opacity: 0.7; text-decoration: none; }
 
-  /* ── Bottom dots ── */
   .hk-dots {
     display: flex; justify-content: center; gap: 8px;
   }
@@ -390,7 +383,7 @@ const hackathons: Hackathon[] = [
   }
   .hk-dot.active { background: var(--accent); width: 42px; }
 
-  /* ── Mobile ── */
+
   @media (max-width: 768px) {
     .hk-card {
       grid-template-columns: 1fr;
@@ -435,7 +428,7 @@ const hackathons: Hackathon[] = [
   nextBtn.addEventListener('click', () => goTo(cur + 1));
   dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
 
-  // Swipe support
+
   let startX = 0;
   const container = document.getElementById('hkSlides')!;
   container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
@@ -444,7 +437,7 @@ const hackathons: Hackathon[] = [
     if (Math.abs(diff) > 50) goTo(diff > 0 ? cur + 1 : cur - 1);
   });
 
-  // Keyboard (only when section is visible)
+
   document.addEventListener('keydown', e => {
     const section = document.getElementById('hackathons');
     if (!section) return;
@@ -457,7 +450,7 @@ const hackathons: Hackathon[] = [
   prevBtn.disabled = true;
   nextBtn.disabled = slides.length <= 1;
 
-  // Thumbnail clicks
+
   document.querySelectorAll<HTMLButtonElement>('.hk-thumb').forEach(thumb => {
     thumb.addEventListener('click', () => {
       const galId = thumb.getAttribute('data-gal')!;

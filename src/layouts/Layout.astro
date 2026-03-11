@@ -8,6 +8,7 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Vasile Andrei Popan – SRE & DevOps Engineering." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body>
@@ -45,7 +46,7 @@ const { title } = Astro.props;
     line-height: 1.65;
   }
 
-  /* ── The actual snap container ── */
+
   #snap-root {
     height: 100%;
     overflow-y: scroll;
@@ -53,7 +54,7 @@ const { title } = Astro.props;
     scroll-behavior: smooth;
   }
 
-  /* ── Each snapping panel ── */
+
   .panel {
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -62,7 +63,6 @@ const { title } = Astro.props;
     
   }
 
-  /* ── Inner section layout ── */
   .section {
     max-width: var(--max-w);
     margin: 0 auto;
